@@ -1,6 +1,6 @@
 ### StudyProject
-1.记录学习过的知识点。
-2.编程语言：Python、PHP
+* 记录学习过的知识点。
+* 编程语言：Python、PHP
 脚本语言：html、css、JavaScript
 文本语言：Mackdown
 测试工具：Selenium、Jmeter、Loadrunner、按键精灵
