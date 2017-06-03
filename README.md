@@ -1,5 +1,5 @@
-### StudyProject
-### 记录学习过的知识点。
+# StudyProject
+# 记录学习过的知识点。
 1. 编程语言：Python、PHP
 2. 脚本语言：html、css、JavaScript
 3. 文本语言：Mackdown
