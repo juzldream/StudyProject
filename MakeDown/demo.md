@@ -40,3 +40,40 @@
 	3. 语文
 2. 其它
 
+# 连接
+## 内嵌连接
+- 外部连接 [51cto](http://edu.51cto.com/)
+- 内部连接 [git学习笔记](git学习笔记.md)
+- 内部连接 [段落](demo.md#段落)
+
+## 引用连接
+- 引用连接 [百度]
+- 引用连接 [段落]
+
+<!--- 下面是应用连接用到的url地址 -->
+[百度]: http://www.baidu.com
+[段落]: demo.md#段落
+
+# 图片
+
+![个人微信订阅号：juzldream](https://mmbiz.qlogo.cn/mmbiz/4iaE7bB4HCjela0GOaPMP39zrjCp7nqGsla9xRfX9ADn4XszG5ticZM0yQAJMFheBLqQZvlibporibxtPib5icOer9iag/0?wx_fmt=jpeg "个人微信订阅号：juzldream")
+
+![](image/yangmin.jpg)
+
+# 引用
+
+>一个梦想，一个世界。 
+
+ 出自racher个人语录
+ 
+>>>多次引用
+
+# 代码库
+
+```javascript
+var a = 10;
+alert(a)
+
+```
+
+这是一行`var a= 10` 代码块
