@@ -77,3 +77,52 @@ alert(a)
 ```
 
 这是一行`var a= 10` 代码块
+
+
+# 水平分割线
+
+<hr> Horizontal ruie
+
+---
+
+<hr> Horizontal ruie
+
+----
+
+# HTML
+<p align="center">html p</p>
+<!-- 
+随便写东西
+
+这一行会被忽略 
+
+-->
+
+# 表格
+|星期|日|一|二|三|四|五|六|
+|----|--|--|--|--|--|--|--|
+|早上|订阅号发文||||![][juzldream]||Selenium|
+|中午|Python|||||[github]|English|
+|晚上|Linux||||||听书|
+
+
+# GFM dome
+Github Fivored Markdown
+
+task list
+
+- [ ] 英语
+- [x] Python
+- [ ] Slenium
+- [ ] appium
+
+emoji
+
+:smile
+
+:pray:
+<!-- 这一行会被忽略 -->
+[百度]:https://www.baidu.com/img/bd_logo1.png
+[juzldream]:https://mmbiz.qlogo.cn/mmbiz/4iaE7bB4HCjela0GOaPMP39zrjCp7nqGsla9xRfX9ADn4XszG5ticZM0yQAJMFheBLqQZvlibporibxtPib5icOer9iag/0?wx_fmt=jpeg
+
+[github]: https://github.com/juzldream
