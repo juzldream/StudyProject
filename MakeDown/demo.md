@@ -121,6 +121,12 @@ emoji
 :smile
 
 :pray:
+
+# 混合
+- *** 加粗倾斜***
+- **~~加粗删除~~**
+- ***~~加粗倾斜~~***
+
 <!-- 这一行会被忽略 -->
 [百度]:https://www.baidu.com/img/bd_logo1.png
 [juzldream]:https://mmbiz.qlogo.cn/mmbiz/4iaE7bB4HCjela0GOaPMP39zrjCp7nqGsla9xRfX9ADn4XszG5ticZM0yQAJMFheBLqQZvlibporibxtPib5icOer9iag/0?wx_fmt=jpeg
