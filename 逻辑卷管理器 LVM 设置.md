@@ -110,7 +110,7 @@ lrwxrwxrwx. 1 root root 7 Aug  7 03:14 /dev/testplanVG/testplanLV -> ../dm-0
 
 ---
 
-![clv](https://mmbiz.qlogo.cn/mmbiz_png/4iaE7bB4HCjd6ZV957qIuIECmkPyKo42F8gCw7dDZ6phB8DJfWAESLiaPCRld0opIqCdiauZmmBNVO6BZGdpias3ag/0?wx_fmt=png)
+![juzldream](https://mmbiz.qlogo.cn/mmbiz_png/4iaE7bB4HCjd6ZV957qIuIECmkPyKo42F8gCw7dDZ6phB8DJfWAESLiaPCRld0opIqCdiauZmmBNVO6BZGdpias3ag/0?wx_fmt=png)
 
 
 * 文件系统
