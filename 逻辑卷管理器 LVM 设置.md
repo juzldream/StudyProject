@@ -1,22 +1,22 @@
-###### 1. 逻辑卷管理器 [logical volume manager]：
-###### LVM 可以整合多个物理分区在一起，让这些分区看起来就像是一个磁盘一样，而且，还可以在将来其它的物理分区或将其从这个LVM管理的磁盘当中删除。LVM 重点在于可以单独调整文件系统的容量。
+1. 逻辑卷管理器 [logical volume manager]：
+LVM 可以整合多个物理分区在一起，让这些分区看起来就像是一个磁盘一样，而且，还可以在将来其它的物理分区或将其从这个LVM管理的磁盘当中删除。LVM 重点在于可以单独调整文件系统的容量。
 
 ![LVM](https://mmbiz.qlogo.cn/mmbiz/4iaE7bB4HCjeIYfjteiaHdFLL5RxQicTUTxlickEicGhd4FvsErwluT6kOxEZQw34r4gTK6MsJuPrvBt7xgydNZFibIQ/0?wx_fmt=gif)
 
-##### 2. who ？ PV 、VG 、PE 、LV ：
+2. who ？ PV 、VG 、PE 、LV ：
 
 - Physical Volume，PV，物理卷
-##### 指磁盘分区或从逻辑上与磁盘分区具有同样功能的设备（如RAID），是LVM的基本存储逻辑块，但和基本的物理存储介质（如分区、磁盘等）比较，却包含有与LVM相关的管理参数。
+指磁盘分区或从逻辑上与磁盘分区具有同样功能的设备（如RAID），是LVM的基本存储逻辑块，但和基本的物理存储介质（如分区、磁盘等）比较，却包含有与LVM相关的管理参数。
 - Volume Group，VG，卷用户组
-##### 类似于非LVM系统中的物理磁盘，其由一个或多个物理卷PV组成。可以在卷组上创建一个或多个LV（逻辑卷）。
+类似于非LVM系统中的物理磁盘，其由一个或多个物理卷PV组成。可以在卷组上创建一个或多个LV（逻辑卷）。
 - Physical Extend，PE,物理扩展卷
-##### 每一个物理卷PV被划分为称为PE（Physical Extents）的基本单元，具有唯一编号的PE是可以被LVM寻址的最小单元。PE的大小是可配置的，默认为4MB。所以物理卷（PV）由大小等同的基本单元PE组成。这个 PE 有点像文件系统里面的 block 大小。
+ 每一个物理卷PV被划分为称为PE（Physical Extents）的基本单元，具有唯一编号的PE是可以被LVM寻址的最小单元。PE的大小是可配置的，默认为4MB。所以物理卷（PV）由大小等同的基本单元PE组成。这个 PE 有点像文件系统里面的 block 大小。
 - Logical Volume，LV,逻辑卷
-##### 逻辑卷LV也被划分为可被寻址的基本单位，称为LE。在同一个卷组中，LE的大小和PE是相同的，并且一一对应。LV 最后可以被格式化使用的文件系统了。
+逻辑卷LV也被划分为可被寻址的基本单位，称为LE。在同一个卷组中，LE的大小和PE是相同的，并且一一对应。LV 最后可以被格式化使用的文件系统了。
 - Physical Storage Media，PSM,物理存储介质
-##### 指系统的物理存储设备：磁盘，如：/dev/hda、/dev/sda等，是存储系统最底层的存储单元。
+指系统的物理存储设备：磁盘，如：/dev/hda、/dev/sda等，是存储系统最底层的存储单元。
 
-##### 3. 创建和管理 LVM
+3. 创建和管理 LVM
 * 创建物理卷 PV
     - 与 PV 相关命令
         *  pvcreate：初始化一个磁盘分区为 LVM
