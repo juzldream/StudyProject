@@ -1,7 +1,7 @@
 # StudyProject
 # 记录学习过的知识点。
 1. 编程语言：Python、PHP
-2. 脚本语言：html、css、JavaScript
+2. 脚本语言：html、css、JavaScript、Shell
 3. 文本语言：Mackdown
 4. 测试工具：Selenium、Jmeter、Loadrunner、按键精灵
 5. 操作系统：Windows、Linux
