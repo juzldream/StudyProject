@@ -1,0 +1,50 @@
+作业：
+1、如何获取Linux当前最新的内核版本号？
+	www.kernel.org
+2、列出你所了解的Linux发行版本，并说明其跟Linux内核的关系。
+	发行版本：Fedora、RedHead（centOS）、SUSE、Debian（Ubuntu，Mint）
+
+上期回顾：
+目录管理：
+ls、cd、pwd、mkdir、rmdir、tree
+
+文件管理：
+touch、stat、file、rm、cp、mv、nano、vi、vim
+
+日期时间：
+date、clock、hwclock、cal
+
+查看文本：
+cat、tac、more、less、head、tail
+
+文本处理：
+cut、join、sed、awk、
+
+文本查找：
+grep
+
+文本排序：
+sort、
+
+1）cat（concatenate）：连接并显示
+	cat -n /etc/issue           //行号
+	cat -E /etc/issue           //显示每行结束$
+
+2)tac ：反向连接打印
+
+Ctrl+c  结束进程 以及终结不想执行刚才输入的命令
+
+3）more、less 分屏显示
+4）head ：查看前n行
+5）tail：查看后n行
+	-n
+	-f ：                 //查看文件尾部，不退出，等待显示后续追加至此文件的新内容；               
+
+
+6)sort :排序
+	-n                   //按数字排序
+	-r                   //降序
+	-t                   //字段分隔符
+	-u                   //相同只显示一次
+	-f                   //排序时忽略字符大小写
+	sort -t ：-k3 /etc/passwd

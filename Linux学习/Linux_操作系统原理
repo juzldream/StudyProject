@@ -1,0 +1,88 @@
+1.计算机体系结构
+
+	运算器
+	控制器
+	存储器 ，内存，编址
+	输出设备
+	输入设备
+
+2.硬件架构:
+
+	ARM
+	x86
+	x64
+	安腾
+	alpha
+	UltraSparc
+	Power
+	M68000,M68K
+	PowerPC
+
+3.OS[Operation System]：
+
+	Windows
+	Linux
+	Unix
+		HP-UX
+		Solaris
+		AIX
+		SCO UNIX
+		Unixwaer
+	OS/2
+
+4.内核功能：
+
+	进程管理
+	内存管理
+	文件系统
+	网络功能
+	硬件驱动
+	安全机制
+
+5.GNU：GNU is Not Unix 。GNU计划，又称革奴计划，是由Richard Stallman在1983年9月27日公开发起的。它的目标是创建一套完全自由的操作系统。
+6.GPL：General Public License
+
+
+Emacs:文本编辑器
+gcc：GNU C Complier
+bash：
+
+Linux：glibc，gcc
+
+RedHat
+SLS
+Debian ,dpt
+SUSE  ,rpm
+Ubuntu:Mint
+
+发行商：release
+
+CentOS：Community ENTerprise OS
+
+Fedora:
+
+7.Linux的基本原理：
+	1）由目的单一的小程序组成：组合小程序完成复杂任务；
+	2）一切接文件：
+	3）尽量避免捕获用户接口：
+	4）配置文件保存为纯文本格式：
+
+GUI接口：图形用户界面（Graphical User Interface）Gnome，KDE，XFace
+CLI接口：（command-line interface，命令行界面）sh bash，csh，zsh，ksh，tcsh
+	命令提示符，prompt
+	#：root
+	$:普通用户
+8.命令格式
+	命令 选项 参数
+		选项[控制命令的执行方式]：
+			短选项：-
+				多个选项可以组合：ls -a -l 
+			长选项: --
+		参数：命令的作用对象  ls -a /etc
+
+虚拟终端（terminal）：Ctrl+Alt+F1-F6
+
+9.切换用户
+	su：switch user
+	su -l 用户名
+	
