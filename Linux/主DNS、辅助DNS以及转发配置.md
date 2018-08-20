@@ -67,3 +67,6 @@
     	allow-recursion  {172.10.0.0/16;}；#定义给172.10.0.0网段递归
     };
     ```
+5. sample
+
+    ![sample](https://mmbiz.qpic.cn/mmbiz_png/4iaE7bB4HCjfduRh31oJxkyVticquUvoI5ebkqM1sXujkoc2vWxCyGH2F1pSlGkvSoayv6TxS02tpnGicXUKvM3eg/0?wx_fmt=png)
