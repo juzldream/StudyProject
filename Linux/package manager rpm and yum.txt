@@ -1,0 +1,210 @@
+程序组成部分:
+	二进制文件
+	库
+	配置文件
+	帮助文件
+
+	/bin , /sbin , /lib , /usr/share/man
+	系统启动就需要用的的程序，这些目录不能挂载额外的分区，必须在跟文件系统的分区上
+
+	/usr/
+	bin
+	sbin
+	lib
+	操作系统核心功能，可以单独分区
+
+	/usr/local
+
+	bin
+	sbin
+	etc
+	man
+
+	/proc    #伪文件系统
+	/sys      #伪文件系统
+
+	/dev      #设备，不能单独分区
+	/var       #w外围文件系统，日记信息、运行过程信息，建议单独分区
+	/boot     #内核，initrd（initramfs），要单独分区
+
+POST——>BIOS(HD)——>(MBR)bootloader（文件系统结构，etx2，etx3，xfs）——>内核
+
+程序：指令+数据
+	指令：芯片
+	CPU:普通指令，特权指令
+	指令集
+
+软件包管理器
+	1.打包成一文件：二进制程序、库文件、配置文件、帮助文件
+	2.生成数据库：追踪所安装的每一个文件
+
+	软件包管理器核心功能：
+	1. 制作软件包
+	2. 安装、卸载、升级、查询、校验、数据库的重建
+
+	RedHat 、SUSE :RPM  
+	Redhat Package Manager
+	Debian：dpt
+
+	依赖关系：
+	X——>Y——>Z
+
+yum: Yellowdog Update Modifier
+
+rpm命令：
+	rpm：
+	数据库：/var/lib/rpm
+	rpmbuild:
+
+rpm命名：
+	包：组成部分
+	主包：bind-9.1.0-1.el5-i586.rpm
+	子包：
+	bind-libs-9.1.0-1.el5.i586.rpm
+	bind-utils-9.1.0-1el5.i586.rpm
+	bind-9.7.1.tar.gz
+	bind-9.7.1-1.noarch.rpm
+
+	ls /media/cdrom/Packages/
+
+	主版本号：重大改进
+	次版本号：某个子功能发生重大变化
+	发行号：修改了部分bug，调整了一点功能
+
+	rpm 安装：
+	rpm -i
+	-h : 以#号显示进度 
+	-v  : 显示详细过
+	-vv : 显示更详细过程
+
+	rpm -ivh  XXXX.rpm
+	rpm -ivvh  XXXX.rpm
+	--nodeps ：忽略依赖关系
+	--replacepkgs:重新安装，替换原有安装
+	--oldpackage：降级安装
+	--force : 强行安装，可以实现重新安装或降级
+	--test : 不按照，测试
+
+	rpm 查询
+		rpm -q package_name：查询指定的包是否已经安装
+		rpm -qa:查询已经安装的所有包
+		rpm -qi package_name：查询指定包的说明信息
+		rpm -ql package_name : 查询指定安装包安装后生成的文件列表
+		rpm -qc pachage_name：查询指定安装包安装的配置文件
+		rpm -qd pachage_name：查询指定安装包安装的帮助文件
+		rpm -qf /path/to/somefile：查询指定文件是由那个rpm包安装生成的  
+		rpm -qf  /etc/inittab
+		rpm -q --scripts   packag_name：查找指定包中包含的脚步
+		rpm -q --scripts zsh
+
+		rpm -qpi /path/to/package_file :软件未安装查询包信息
+		rpm -qpl
+
+	rpm 升级
+		rpm -Uvh 如果有老版本，则升级；负责安装
+		rpm -Fvh
+		--oldpackage:降级
+
+	rpm 卸载
+		rpm -e package_name 
+		--nodeps
+
+		rpm 校验
+		rpm -V package_name 检验包安装情况
+
+		rpm 检验来源合法性，及软件完整性
+
+加密类型：	
+	对称：加密解密使用同一个秘钥
+	公钥：公钥，私钥。公钥隐藏于私钥中
+	单向：
+
+	# ls /etc/pki/rpm_gpg/RPM_GPG_KEY_redhat-release
+	dsa，gpg ： 验证来源合法性，即验证签名       --nosignature
+	sha1，md5 ：验证软件包完整性              --nodigest
+
+	rpm --import /etc/pki/rpm_gpg/RPM_GPG_KEY_redhat-release    导入秘钥
+	rpm -K package_name   验证包合法性
+
+rpm 重建数据库
+	/var/lib/rpm
+	rpm
+	--rebuilddb:重建数据库
+	--initdb：初始化数据库
+
+yum 仓库中的元数据文件
+	ls /media/cdrom/repodata/ -l
+	XXX.primary.xml.gz 
+	所以rpm包列表
+	依赖关系
+	每个rpm安装生成的文件列表
+	XXX.filelists.xml.gz
+	当前仓库 中所有的rpm包的所有文件列表
+	XXX.other.xml.gz
+	额外信息，rpm的修改日志
+	repomd.xm
+	记录的是上面3个文件的时间戳和校验码
+	XXX.comps-rhel6-Server.xml.gz
+rpm包分组信息
+
+/etc/yum.conf   #yum配置信息
+
+如何为yum定义repo文件？
+	[repo_name]
+	name=Description
+	baseurl=file:///
+	http://
+	ftp://
+	enabled=1   #当前仓库是否被使用 ， 1：启用，0禁用
+	gpgcheck=1 #使用使用gpg验证包合法性 ，1：允许，0：不需要
+	gpgkey=file:///media/cdrom/RPM-GPG-KEY-redhat-release
+
+yum 命令
+
+	yum list  列表
+	yum list all
+	yum list available 可用的，仓库中有但尚未安装的
+	yum list installed 已经安装的
+	yum list updates 可用的升级
+
+	yum clean [  packages | metadata | expire-cache | rpmdb | plugins | all ]
+
+	yum repolist all 显示所有仓库
+	yum repolist enabled 显示可用仓库
+	yum repolist disabled 显示不可用的仓库
+
+	yum install package_name  -y
+
+	yum update 升级
+	yum update_to 升级到制定版本
+
+	yum remove|rease 卸载
+
+	yum info package_name 查看包信息
+
+	yum provides /etc/named   查看制定文件有那个包安装生成的
+
+	yum grouplist "Development tools" 
+	yum groupremove "Development tools" 
+	yum groupinfo "Zulu Support"  查看包信息
+
+	yum localinstall  ###.rpm  自动解决依赖关系
+
+
+如何创建yum仓库：
+createrepo 
+
+编译安装
+	./configure
+	--prefix=/path   软件安装路径
+	--sysconfigdir=/path  配置目录
+	make
+	make install
+
+netstat 命令
+	-r ：显示路由
+	-n：以数字方式显示
+	-t：建立的tcp连接
+	-u：显示udp连接
+	-l：显示监听转态的连接
+	-p：显示监听指定的套接字的进程号与进程名  （eg:netstat -tulnp）
