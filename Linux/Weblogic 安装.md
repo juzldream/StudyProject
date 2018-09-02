@@ -8,17 +8,17 @@
 
 4. 配置环境变量
 
-```
-vi /etc/profile.d/jdk.sh
-#最文本最后添加：
-export JAVA_HOME=/usr/java/jdk1.7.0_79
-export CLASSPATH=.:$JAVA_HOME/jre/lib/rt.jar:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
-export PATH=$PATH:$JAVA_HOME/bin
-#并存并退出后，使配置生效
-source /etc/profile.d/jdk.sh
-#查看是否安装成功：
-java -version
-```
+	```
+	vi /etc/profile.d/jdk.sh
+	#最文本最后添加：
+	export JAVA_HOME=/usr/java/jdk1.7.0_79
+	export CLASSPATH=.:$JAVA_HOME/jre/lib/rt.jar:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+	export PATH=$PATH:$JAVA_HOME/bin
+	#并存并退出后，使配置生效
+	source /etc/profile.d/jdk.sh
+	#查看是否安装成功：
+	java -version
+	```
 
 ### 二、`weblogic` 安装
 
