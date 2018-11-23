@@ -26,7 +26,7 @@
     - 显示Docker环境信息
     `docker info`
     - 下载镜像
-    docker image busybox
+    `docker pull busybox`
     - 查看镜像
     `docker image ls`
     `docker image ls --no-trunc`

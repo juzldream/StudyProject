@@ -111,3 +111,8 @@
 * 查看nat防火墙配置
 
     `iptables -t nat -vnL  `
+
+
+
+
+
