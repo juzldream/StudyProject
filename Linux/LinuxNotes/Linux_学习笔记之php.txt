@@ -1,0 +1,130 @@
+编程语言
+	
+	静态语言：编译型语言
+		C，C++，JAVA
+		有点：性能好
+		缺点：每一次改动都需要重新编译；开发周期长；维护成本大
+	
+	动态语言：解释型语言
+		shell，perl，php，python
+		有点：便于维护；众多共享模块，开发周期短；维护成本小
+		缺点：性能差
+		
+		每一种语言都有自己的应用场景！
+		
+		
+		bash
+		perl
+		python django
+		java jsp ssh(Spring,Stucts,Hibernate)
+		ruby rails
+		asp,php
+		
+		
+学习编程：
+	
+	基本语法
+	算法，数据结构
+	编译原理
+	
+	OpenStack  是python语言开发	
+	
+	
+PHP is Hypertext Preprocessor  （超文本预处理器）	，php解释型
+
+opcode：操作码
+
+
+PHP目录结构
+
+	build  源码编译相关文件
+	ext    扩展目录
+	main
+	Zend
+	pear
+	sapi
+	TSRM
+	tests
+	win32
+	
+
+
+CGI:Common gateway Interface 
+	
+PHP官方站点: www.php.net
+
+
+HTML
+
+<html>
+	<head>
+		<title></title>
+	</head>
+	<body>
+		<h1></h1>
+	</body>
+</html>
+
+
+test.sh
+
+
+#!/bin/bash
+#
+#
+
+cat << EOF 
+Content-Type:text/html
+
+<pre>
+<h1>$(/bin/date)</h1>
+</pre>
+EOF
+
+MVC: 嵌入式web开发语言  。 数据样式分离 。MVC全名是Model View Controller，是模型(model)－视图(view)－控制器(controller)的缩写，一种软件设计典范，用一种业务逻辑、数据、界面显示分离的方法组织代码，将业务逻辑聚集到一个部件里面，在改进和个性化定制界面及用户交互的同时，不需要重新编写业务逻辑。
+
+index.phh
+
+<html>
+	<head></head>
+	<body>
+		<?php
+        phpinfo();
+    php>
+	</body>
+</html>
+
+《大话设计模式》
+
+Apache
+	DSO:dynamic shared object
+	php_mod
+	
+apache+php
+		CGI
+		Module
+		FastCGI
+
+Nginx+fpm
+
+php.ini 文件格式：
+
+		; display_errors
+		;   Default Value: On
+		;   Development Value: On
+		;   Production Value: Off
+
+		
+
+touch test{1..9}.sh    //批量创建test1.sh ~ test9.sh
+rm -rf test{1..7}.sh   //批量删除test1.sh ~ test7.sh	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
