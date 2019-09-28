@@ -81,7 +81,10 @@ Content-Type:text/html
 </pre>
 EOF
 
-MVC: 嵌入式web开发语言  。 数据样式分离 。MVC全名是Model View Controller，是模型(model)－视图(view)－控制器(controller)的缩写，一种软件设计典范，用一种业务逻辑、数据、界面显示分离的方法组织代码，将业务逻辑聚集到一个部件里面，在改进和个性化定制界面及用户交互的同时，不需要重新编写业务逻辑。
+MVC: 嵌入式web开发语言  。 数据样式分离 。
+MVC全名是Model View Controller，是模型(model)－视图(view)－控制器(controller)的缩写，一种软件设计典范，
+用一种业务逻辑、数据、界面显示分离的方法组织代码，将业务逻辑聚集到一个部件里面，
+在改进和个性化定制界面及用户交互的同时，不需要重新编写业务逻辑。
 
 index.phh
 
