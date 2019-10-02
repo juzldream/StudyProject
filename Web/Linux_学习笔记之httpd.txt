@@ -1,0 +1,242 @@
+apache: 17,
+
+NCSA, httpd
+
+	A Patchy Server = apache
+
+FSF: GNU, GPL
+ASF: Apache Software Foundation
+	web: httpd
+		 Tomcat
+		 Hadoop
+		 
+	www.apache.org
+	
+web: http://httpd.apache.org
+
+httpd:
+	Web Server, Open Source
+	2.2, 2.4, 2.0, 1.3
+	
+httpd:
+	事先创建进程
+	按需维持适当的进程
+	模块块设计，核心比较小，各种功能都模块添加（包括php）
+		支持运行配置，支持单独编译模块
+	支持多种方式的虚拟主机配置
+		Socket  IP:Port
+		虚拟主机：
+			基于IP的虚拟主机；
+			基于端口的虚拟主机；
+			基于域名的虚拟主机；
+		
+protocol://HOST:PORT/path/to/source
+		
+			Method URL version
+			header
+			
+			body
+
+
+			GET /download/linux.tar.bz2 HTTP/1.0
+			Host: www.magedu.com
+	支持https协议 (mod_ssl)
+	支持用户认证
+	支持基于IP或主机名的ACL
+	支持每目录的访问控制
+	支持URL重写，/image/a.jpeg, /bbs/images/abc.jpeg
+	
+
+RedHat(httpd):
+	rpm包：
+	源码编译
+	
+httpd: SELinux(事先让其处于permssive, disabled)
+
+httpd:
+	/usr/sbin/httpd(MPM: prefork)
+		httpd: root, root (master process)
+		httpd: apche, apache (worker process)
+	/etc/rc.d/init.d/httpd
+	Port: (80/tcp), (ssl: 443/tcp)
+	/etc/httpd: 工作根目录，相当于程序安装目录
+	/etc/httpd/conf: 配置文件目录
+		主配置文件：httpd.conf
+		/etc/httpd/conf.d/*.conf
+	/etc/httpd/modules: 模块目录
+	/etc/httpd/logs --> /var/log/httpd: 日志目录
+		日志文件有两类：访问日志access_log，错误日志：err_log
+	/var/www/
+		html
+		cgi-bin
+		
+		cgi: Common Gateway Interface
+			Client --> httpd (index.cgi) --> Spawn Process (index.cgi) --> httpd --> Client
+			perl, python, java, (Servlet, JSP), php
+			
+		fastcgi: 
+		
+		程序：指令和数据
+			数据，数据库服务
+			
+httpd:
+	directive value
+	指令不区分字符大小写
+	value则根据需要有可能要区分
+	
+
+
+MPM: Multi Path Modules
+	mpm_winnt
+	prefork (一个请求用一个进程响应)
+	worker  (一个请求用一个线程响应, (启动多个进程，每个进程生成多个线程))
+	event   (一个进程处理多个请求)
+
+
+URL路径跟本地文件系统路径不是一码事儿， URL是相对于DocumentRoot的路径而言的。
+
+Options
+	None: 不支持任何选项
+	Indexes: 允许索引目录
+	FollowSynLinks: 允许访问符号链接指向的原文件
+	Includes: 允许执行服务端包含（SSI）
+	ExecCGI: 允许运行CGI脚本
+	All: 支持所有选项
+	
+Order：用于定义基于主机的访问功能的，IP，网络地址或主机定义访问控制机制
+	Order allow,deny
+	allow from
+	deny from
+	
+192.168.0.0/24
+
+地址的表示方式：
+	IP
+	network/netmask
+	HOSTNAME: www.a.com
+	DOMAINNAME: magedu.com
+	Partial IP: 172.16, 172.16.0.0/16
+
+Order deny,allow
+Deny from 192.168.0.0/24
+
+	192.168.0.1, 172.16.100.177
+
+elinks http://172.16.100.1
+	-dump
+	-source
+
+
+
+AuthType Basic
+AuthName "Restricted Files"
+AuthUserFile /usr/local/apache/passwd/passwords
+Require user marion
+
+
+Group File Syntax:
+GroupName: rbowen dpitts sungo rshersey
+
+
+AuthType Basic
+AuthName "By Invitation Only"
+# Optional line:
+AuthBasicProvider file
+AuthUserFile /usr/local/apache/passwd/passwords
+AuthGroupFile /usr/local/apache/passwd/groups
+Require group GroupName
+
+
+Require valid-user
+
+
+
+<Directory /www/docs/private>
+AuthName "Private"
+AuthType Basic
+AuthBasicProvider dbm
+AuthDBMUserFile /www/passwords/passwd.dbm
+Require valid-user
+</Directory>
+
+
+
+tom
+http://172.16.100.1/~tom/
+
+
+PV: Page View，每天的页面访问量
+UV: User View, 每天的独立IP访问量
+
+
+/web/html
+
+/www/forum bbs
+
+http://172.16.100.1/bbs/images/logo.jpeg
+
+定义网站文档目录
+访问选项:options
+基于主机的访问控制
+基于用户或组的访问控制
+用户个人站点
+错误日志
+日志格式
+访问日志 PV UV
+路径别名
+CGI
+虚拟主机
+
+
+Apache的指令：
+Listen [IP:]PORT
+MPM: MultiPath Modules
+	prefork: 一个请求用一个进程处理，稳定性好、大并发场景下消耗资源较多；
+	worker：每个请求用一个线程处理(启动一定数量的进程，每个进程生成一定数量的线程)
+	event：每个进程处理多个请求，基于事件来实现 （apache 2.2测试）
+	mpm_winnt
+	
+httpd, httpd.worker, httpd.event
+
+/etc/sysconfig/httpd
+
+
+prework
+<IfModule prefork.c>
+	StartServers
+	MinSpareServers
+	MaxSpareServers
+	MaxClients
+	ServerLimit
+	MaxRequestsPerChild
+</IfModule>
+	
+
+ErrorLog
+LogLevel
+
+LogFormat
+	combined
+	common
+CustomLog
+
+路径别名：
+Alias /URL "local_path"
+
+User
+Group
+
+
+CGI: Common Gateway Interface, 通用网关接口，协议
+
+网页内容：动态内容，静态内容
+静态内容：
+	.jpeg
+	.gif
+	.png
+	.html
+	.css
+动态内容：
+	编程语言写好程序-->执行一次，生成处理结果，经过html格式化后的文本
+	
+echo "<h1>Hellow world</h1>"

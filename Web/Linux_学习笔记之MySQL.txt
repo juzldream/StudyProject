@@ -1,0 +1,345 @@
+DML：Data Manapulate Language: 数据操作语言
+	INSERT, REPLACE, UPDATE, DELETE
+DDL：Data Defination Lanuage: 数据定义语言
+	CREATE, ALTER, DROP
+DCL：Data Control Language: 数据控制语言
+	GRANT, REVOKE
+	
+SELECT
+
+
+RDBMS: egreSQL
+	Oracle, Sybase, Infomix, SQL Server, DB2
+	MySQL, PostgreSQL, pgsql, EnterpriseDB
+	
+	MySQL, SQL, MySQL AB
+		去IOE： IBM， Oralce, EMC
+
+
+Oracle, 
+
+IBM
+ 
+SUN-->MySQL
+
+BEA: WebLogic
+PepoleSoft
+
+OpenOffice
+
+LibreOffice
+
+MariaDB
+
+MySQL --> Percona
+
+反关系模型：NoSQL
+	MongoDB  文档数据库
+	Redis    缓存数据库
+	HBase    键值对数据库
+
+
+
+DBMS：
+	数据管理独立性；
+	有效地完成数据存取；
+	数据完整性和安全性；
+	数据集中管理；
+	并发存储与故障恢复；
+	减少应用程序开发时间；
+	
+
+SQL: ANSI
+sql86, sql89, sql92, sql99
+
+DDL, DML, DCL
+
+
+MySQL: 
+	Community Edtion
+	Enterprise Edtion
+
+软件包格式：
+	软件包管理器特有的格式
+		rpm包，.exe格式等
+	通用二进制格式(类似windows绿色软件不用安装，简单配置就可以使用)
+	源程序
+
+
+
+RHEL 6.5 （64bit）
+  yum list all |grep mysql
+	mysql.x86_64, mysql-server.x86_64
+	rpm -qi mysql.x86_64 查看包信息
+	
+
+二进制程序
+mysql
+	-u USERNAME
+	-p
+	-h MYSER_SERVER
+	
+	-h 127.0.0.1
+		Linux: socket
+		Windows: memory
+		
+mysql客户端：
+	交互式模式
+	批处理模式
+		执行mysql脚本
+
+		
+交互式模式中的命令类别：
+	客户端命令
+	服务器端命令
+		都必须使用语句结束符，默认为分号;
+		
+
+		
+		
+SQL接口：
+	Oracle, PL/SQL
+	SQL Server, T-SQL
+	
+
+	
+用户：USERNAME@HOST
+	
+mysqld
+
+tcp/3306, mysql, mysql
+
+RDBMS: 
+	/var/lib/mysql/
+	
+初始化：
+	
+
+关系数据库对象：
+	库
+	表
+	索引
+	视图
+	约束
+	存储过程
+	存储函数
+	触发器
+	游标
+	用户
+
+
+	权限
+	事务
+	
+表：
+	行，列
+	表：实体
+		行: row
+		列：field, column
+
+字段名称，数据类型，类型修饰（限制）
+	字符
+		CHAR(n)
+		VARCHAR(n)
+		BINARY(n)
+		VARBINARY(n)
+		TEXT(n)
+		BLOB(n)
+	数值
+		精确数值
+			整型
+				TINYINT
+				SMALLINT
+				MEDIUMINT
+				INT
+				BIGINT
+				
+				修饰符：UNSIGNED，无符号
+						NOT NULL
+			十进制
+				DECIMAL
+		近似数值
+			浮点型
+				FLOAT
+				DOUBLE
+	日期时间
+		DATE
+		TIME
+		DATETIME
+		STAMP
+	布尔
+	内置：ENUM， SET
+
+
+DDL
+	CREATE
+	ALTER
+	DROP
+DML
+	INSERT
+	UPDATE
+	DELETE
+DCL
+	GRANT
+	REVOKE
+	
+创建数据库
+	CREATE DATABASE db_name; 
+	CREATE DATABASE [IF NOT EXISTS] db_name;
+	
+	DROP DATABASE [IF EXISTS] db_name;
+	
+创建表
+	CREATE TABLE tb_name(col1,col2,...);
+	
+	查看库中的表：SHOW TABLES FROM db_name；
+	查看表的结构：DESC tb_name;
+
+	删除表：DROP TABLE tb_name；
+	
+修改表：
+	ALTER TABLE tb_name 
+		MODIFY
+		CHANGE
+		ADD
+		DROP
+
+DML:
+	INSERT INTO tb_name (col1,col2,...) VALUES|VALUE ('STRING', NUM,...);
+	INSERT INTO tb_name (col1,col2,...) VALUES|VALUE ('STRING', NUM,...),('STRING',NUM,...);	
+	
+	UPDATE tb_name SET column=value WHERE  
+		
+	DELETE FROM tb_name WHERE CONDITION;
+
+选择：
+	SELECT 字段 FROM tb_name WHERE CONDITION
+	
+	*: 所有字段
+	WHERE：没有条件表示显示所有行；
+
+创建用户：
+	CREATE USER 'USERNAME'@'HOST' [IDENTIFIED BY 'PASSWORD'];
+	DROP USER 'USERNAME'@'HOST';
+	
+	HOST:
+		IP：
+		HOSTNAME:
+		NETWORK：
+		通配符
+			_:匹配任意单个字符， 172.16.0._
+			%:匹配任意字符；
+			
+	jerry@'%'
+DCL:
+	GRANT pri1,pri2,... ON DB_NAME.TB_NAME TO 'USERNAME'@'HOST' [IDENTIFIED BY 'PASSWORD'];
+	REVOKE pri1,pri2,... ON DB_NAME.TB_NAME FROM 'USERNAME'@'HOST';
+	
+	查看用户的授权：SHOW GRANTS FOR 'USERNAME'@'HOST';
+	
+	ALL PRIVILEGES
+	
+	
+	
+
+
+
+选择和投影
+
+
+MySQL基础操作练习(所属的库叫做testdb)：
+
+新建如下表（包括结构和内容）：
+
+ID    Name          Age     Gender     Course
+1     Ling Huchong   24      Male       Hamogong
+2     Huang Rong    19      Female     Chilian Shenzhang
+3     Lu Wushaung   18      Female     Jiuyang Shenggong
+4     Zhu Ziliu     52      Male       Pixie Jianfa
+5     Chen Jialuo   22      Male       Xianglong Shiba Zhang
+
+	
+2、完成如下操作
+	(1)找出性别为女性的所有人；
+	(2)找出年龄大于20的所有人；
+	(3)修改Zhu Ziliu的Course为Kuihua Baodian; 
+	(4)删除年龄小于等于19岁的所有人；
+	(5)创建此表及所属的库；	
+	(6)授权给testuser对testdb库有所有访问权限；
+	
+
+mysql> FLUSH PRIVILEGES;
+
+为用户设定密码：
+1、mysql>SET PASSWORD FOR 'USERNAME'@'HOST'=PASSWORD('password');	
+	
+2、# mysqladmin	-uUSERNAME -hHOST -p password 'password'
+	
+3、mysql> UPDATE user SET Password=PASSWORD('password')	WHERE USER='root' AND Host='127.0.0.1';
+
+	
+AND
+OR
+NOT
+	
+图形客户端：
+1、phpMyAdmin
+2、Workbench
+3、MySQL Front
+4、Navicat for MySQL
+5、Toad
+
+
+单层结构
+二层结构
+三层结构
+
+
+	
+DDL,DML,DCL
+
+库、表、索引、视图、存储过程、存储函数、触发器、用户、游标、约束（键，码）、事件调度器(Event Scheduler)
+事务、权限
+
+DDL:
+	CREATE
+	ALTER
+	DROP
+	
+DML: 
+	INSERT INTO
+	UPDATE 
+	DELETE
+	
+SELECT
+
+DCL:
+	GRANT
+	REVOKE
+	
+Field: Col_Name Col_Defination
+	数据类型 修饰符
+	
+User CHAR(20) NOT NULL,
+	UNSIGNED：无符号, 8bit: 0-255, -128 127
+	
+数据类型：
+	字符型
+		定长：
+			CHAR()
+			BINARY()
+		变长
+			VARCHAR()
+			VARBINARY()
+	数值型
+		精确
+			INT
+			DECIMAL
+		近似
+			FLOAT
+			DOUBLE
+	日期时间型
+		DATE
+		TIME
+		DATETIME
+		STAMP
