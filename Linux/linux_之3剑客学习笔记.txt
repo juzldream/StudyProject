@@ -1,0 +1,541 @@
+grep：文本过滤器 
+
+grep global Research [regular expression] 
+
+grep ：根据模式搜索文本，并将符合模式的文本行显示出来
+
+grep [OPTIONS] PATTERN [FILE...]
+	-i ：不区分大小写
+	--colour ： 高亮显示匹配到的文本行
+		[aiobs@CMNET-AIOBS2 ~]$ grep --colour root /etc/passwd
+		root:x:0:0:root:/root:/bin/bash
+		operator:x:11:0:operator:/root:/sbin/nologin
+	-v ：显示没有被模式匹配到的文本行
+	-o ：只显示被模式匹配到的字符串
+		[aiobs@CMNET-AIOBS2 ~]$ grep --colour -o root /etc/passwd
+		root
+		root
+		root
+		root
+	-E ：扩展正则表达式
+	-A #：匹配到的行向下显示行
+		grep --color -A 2 '^core id' /proc/cpuinfo #显示匹配到的行再向下显示2行
+  -B #：匹配到的行向上显示行
+  -C #：匹配到的行向上和向下显示行
+
+
+正则表达式：REGular EXPression ，REGEXP
+
+https://www.regular-expressions.info/
+https://regex101.com/  grep 
+http://json.org/
+
+
+[aiobs@CMNET-AIOBS2 bms]$ grep "^13659506831" log2019* --color  #以^13659506831
+[aiobs@CMNET-AIOBS2 bms]$ grep "13659506831$" log2019* --color  #13659506831结尾
+[aiobs@CMNET-AIOBS2 bms]$ grep -i "my" log2019* --color         #-i 不区分大小写
+[aiobs@CMNET-AIOBS2 bms]$ grep -n . test.sh --color             #过滤包含任意字符 ，并显示行号
+[aiobs@CMNET-AIOBS2 bms]$ grep -n "\." test.sh --color          #过滤带有. 的行，”\“ 转意
+[aiobs@CMNET-AIOBS2 ~]$ grep r..t /etc/passwd                   #过滤r开头中间任意两个字符t结尾的行
+
+
+egrep "3306|47808" /etc/services --colour                       # | 或匹配多个
+
+元字符
+
+.
+[]
+[^]
+[:digit:] [:lower:] [:upper:] [:punct:] [:space:] [:alpha:] [:alnum:]
+
+[aiobs@CMNET-AIOBS2 ~]$ grep '^[[:digit:]]' /etc/hosts  #显示以数字开始的行
+
+匹配次数
+. （1）代表当前目录；隐藏文件标识；（2）任意一个字符；（3）使得一个配置文件生效（source /etc/profile  === . /etc/profile）
+.. 代表上一次目录；
+*  匹配其前面的字符任一次
+.* 任意长度的任意字符
+|  或查找多个匹配条件的字符
++  重复一个或多个
+？ 重复o个或1个
+\{m,n\}   匹配前面字符至少m次，至多n次
+	\{1,\}  匹配前面字符至少1次，多了不限制
+	\{0,3\} 匹配前面字符至少0次，至多3次
+
+
+	a、b、ab、aab、acb、adb、amnb
+	a*b   # ab  aab 
+	a.*b  # ab aab acb adb amnb  
+	a?b   # b ab aab acb adb amdb 
+	
+	
+位置锚定
+^  锚定行首
+	grep "^r..t" /etc/passwd
+$  锚定行尾
+	grep "#$" /etc/inittab
+^$ 空白行
+	grep '^$' /etc/inittab #找这个文件空白行
+\< 或者\b  锚定词首
+\> 或者\b  锚定词尾
+
+\<root\>  #精确匹配root
+
+分组
+\(\) 分组
+	\(ad\)*  #ab可以出现任意次  
+
+
+提取IP、子网掩码 、网管
+
+[xzdnsaipso@DQAS ~]$ ifconfig | sed -n 's#^.*addr:\([0-9].*\)  Bcast:\([0-9].*\)  Mask:\([0-9].*\)#\1 \2 \3#gp'
+117.136.159.44 117.136.159.47 255.255.255.248
+
+
+提取MAC地址
+
+[xzdnsaipso@DQAS ~]$ ifconfig eth0 | sed -n 's#^.*HWaddr \([0-9].*\)#\1#gp'
+08:94:EF:33:5D:8C  
+[xzdnsaipso@DQAS ~]$ ifconfig  | sed -n 's#^.*HWaddr \([0-9].*\)#\1#gp'
+08:94:EF:33:5D:8C  
+08:94:EF:33:5D:8C  
+08:94:EF:33:5D:8C
+
+
+提取网卡地址：
+
+ifconfig bond0 | grep "inet addr" | cut -d ":" -f2 | cut -d " " -f1
+ifconfig bond0 | grep  "inet addr" |awk -F "[: ]" '{print $13}'
+ifconfig bond0 | grep  "inet addr" |awk -F "[: ]+" '{print $4}'
+ifconfig |sed -rn 's#^.*dr:(.*)  Bc.*$#\1#gp'
+ifconfig bond0 | sed -n 2p |awk -F "[: ]+" '{print $4}'
+ifconfig bond0 | awk -F "[: ]+" 'NR==2 {print $4}'
+grep IPADDR /etc/sysconfig/network-scripts/ifcfg-eth0 | cut -d "=" -f2
+ifconfig eth0 | sed -n '/inet addr/p' | sed 's#^.*addr:##g' | sed 's#  Bc.*$##g'
+ifconfig eth0 | sed -n 2p | sed 's#^.*addr:##g' | sed 's#  Bc.*$##g'
+ifconfig bond0 | sed -n 's#^.*addr:\(.*\)  Bcast.*$#\1#gp'
+
+
+提取文件权限：
+
+[xzdnsaipso@DQAS ~]$ stat /etc/passwd
+  File: "/etc/passwd"
+  Size: 3562      	Blocks: 8          IO Block: 4096   普通文件
+Device: 803h/2051d	Inode: 8790242     Links: 1
+Access: (0644/-rw-r--r--)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2019-10-24 10:16:26.837507746 +0800
+Modify: 2019-09-30 10:16:08.809524096 +0800
+Change: 2019-09-30 10:16:08.826524098 +0800
+[xzdnsaipso@DQAS ~]$ stat /etc/passwd | sed -n 4p | awk -F "[/(]" '{print $2}'
+0644
+[xzdnsaipso@DQAS ~]$  stat /etc/passwd | sed -n 's#^.*s: (\([0-9].*\)/-r.*$#\1#gp'
+0644
+[xzdnsaipso@DQAS ~]$ ll /etc/passwd | cut -c 2-10 | tr rwx- 4210 | awk -F "" '{print $1+$2+$3 $4+$5+$6 $7+$8+$9}'
+644
+[xzdnsaipso@DQAS ~]$ stat -c %a /etc/passwd
+644
+
+
+
+[xzdnsaipso@DQAS ~]$ echo hello,world! | sed 's#o#O#g'
+hellO,wOrld!
+[xzdnsaipso@DQAS ~]$ echo hello,world! | sed 's@o@O@g'
+hellO,wOrld!
+[xzdnsaipso@DQAS ~]$ echo hello,world! | sed 's#o#O#g'
+hellO,wOrld!
+[xzdnsaipso@DQAS ~]$ echo hello,world! | sed 's@o@O@g'
+hellO,wOrld!
+
+[aiobs@CMNET-AIOBS2 zhihuishenji]$ set a=100M30
+[aiobs@CMNET-AIOBS2 zhihuishenji]$ echo $a|cut -d 'M' -f1
+100
+[aiobs@CMNET-AIOBS2 zhihuishenji]$ set b=200M30
+[aiobs@CMNET-AIOBS2 zhihuishenji]$ echo $b | cut -d 'M' -f1
+200
+
+egrep 
+
+grep -E == egrep 
+
+egrep --color 'apache|mysql' /etc/services
+
+
+fgrep
+
+
+
+
+
+---------------------------------------------------------------
+	
+sed：流编辑器
+
+sed:Stream EDitor
+	行编辑器（vim 全屏编辑器）
+
+sed：模式空间
+	默认不编辑源文件，仅对模式空间的数据做处理；处理完成后将模式空间打印出来
+
+
+sed [options] 'AddressCommand' file ...
+	-n :静默模式，不在显示模式空间中的内容
+	-i :修改源文件
+	-e :
+	-f : 
+	-r :扩展正则表达式
+	
+Address：
+	1、StartLine，EndLine 
+		1,100  
+		$ : 最后一行
+		$-1 :倒数第二行
+	2、/RegExp/
+		/^root/
+	3、/pattern1/,/pattren2/	#第一次被pattern1匹配到的行开始，至第一次被pattern2匹配到的行结束，这中间的所有行
+	4、LineNumber #指定的行
+	5、StartLine,+N           #从StartLine行开始，向后N行
+		
+Command：
+	d：删除符合条件的行
+		[aiobs@CMNET-AIOBS1 ~]$ sed '1,2d' /etc/fstab 
+		nl back.txt | '2d'       														#删除第二行
+    nl back.txt | sed '2,5d' 														#删除2到5行
+  a：在指定行后面追加新行
+    nl back.txt | sed '2a hello world !'  							#第2行 后 增加 'hello world !' 
+    nl back.txt | sed '2a hello world \...\' 						#插入多行
+  i：在指定行前面追加新行
+    nl back.txt | sed '2i hello world !'    						#第2行 前 增加 'hello world !'
+  c：替换行 
+    sed '1,2c Hi this to juzldream.' /etc/fstab   	  	#替换1到2行内容为Hi this to juzldream.
+  p：显示符合条件的行
+    nl back.txt  | sed -n '5,7p'             						#只打印5到7行
+    [aiobs@CMNET-AIOBS1 ~]$ sed -n '/^\//p' /etc/fstab  #只打印以“/”开头的行
+	r：将指定文件添加到符合条件的行
+		root@CMNET-AIOBS1# sed '1,2r /etc/fstab' /etc/hosts #将/etc/fstab文件内容添加到 /etc/hosts 第1行和第2行后面
+	w：将符合条件的行打印大指定文件中
+		sed -n '/^#/w /tmp/fstab' /etc/fstab                #将文件/etc/fstab中以#开头的行打印到/tmp/fstab文件中
+	s：查找并替换
+		sed 's/oot/OOT/' /etc/fstab                         #查找oot并替换OOT
+		sed 's/^\#/$/' /etc/fstab														#将行首#替换成$，第一次被模式匹配到的字符串
+			-g：全局替换
+			-i：忽略字符大小写
+		sed 's/\//$/g' /etc/fstab														#将以“/”全局替换为“$”  ，等价于：  sed 's@/@$@g' /etc/fstab  
+		sed 's@d\(ev\)@D\1@g' /etc/fstab                    #将文件/etc/fstab中 dev 全局d替换为D 
+		history | sed "s@[[:space:]]@@g"                    #将history空白替换掉  
+
+---------------------------------------------------------------
+
+
+
+
+awk：报告生成器
+	格式化后：显示
+	
+nawk gwak 
+
+	eg；
+			[aiobs@CMNET-AIOBS2 ~]$ which awk
+			/usr/bin/awk
+			[aiobs@CMNET-AIOBS2 ~]$ ll /usr/bin/awk
+			lrwxrwxrwx. 1 root root 14 Oct 19  2016 /usr/bin/awk -> ../../bin/gawk
+
+
+AWK a.k.a Aho,Kernighan and Weinberger
+
+# awk [options] 'script' file1 file2 ,...
+# awk [options] 'PATTENR {action}' file1 file2,...
+
+[aiobs@CMNET-AIOBS2 ~]$ awk '{print $0}' /etc/hosts
+127.0.0.1   CMNET-AIOBS2 localhost localhost.localdomain localhost4 localhost4.localdomain4
+
+[aiobs@CMNET-AIOBS2 ~]$ awk '{print $1,$2}' /etc/hosts
+127.0.0.1 CMNET-AIOBS2
+
+[aiobs@CMNET-AIOBS2 ~]$ awk 'BEGIN{OFS="|"}{print $1,$2}' /etc/hosts
+127.0.0.1|CMNET-AIOBS2
+::1|CMNET-AIOBS2
+[aiobs@CMNET-AIOBS2 ~]$ awk 'BEGIN{OFS=":"}{print $1,$2,$3,$4}' /etc/hosts
+127.0.0.1:CMNET-AIOBS2:localhost:localhost.localdomain
+
+[aiobs@CMNET-AIOBS2 ~]$ awk 'BEGIN{OFS=":"}{print $1,"juzldream",$2,$3,$4}' /etc/hosts
+127.0.0.1:juzldream:CMNET-AIOBS2:localhost:localhost.localdomain
+
+
+
+一、print 使用
+
+	pring item1,item2 ...
+	
+	[aiobs@CMNET-AIOBS2 ~]$ awk 'BEGIN {print "line one\nlinet two\nline three"}'
+	line one
+	linet two
+	line three
+	
+	[aiobs@CMNET-AIOBS2 ~]$ awk -F : '{print $1,$3}' /etc/passwd
+	zhaceming 508
+	jtcjxz 509
+	fsdtest 510
+	zabbix 511
+	kdcs 512
+	...
+
+二、awk变量
+	2.1 awk内置变量之记录变量
+	FS：Field separator 读取文件时，所使用字段分隔符；
+	RS：Record separator 输入文件信息所使用的换行符；
+	OFS：Output Filed Separtor
+	ORS：Output Row Separator
+	
+	awk -F:
+	OFS='#'
+	FS=":"
+
+	2.2 awk内置变量之数据变量
+	
+	NR：the number of input recods ，awk命令所处理的记录数，如果有多个文件，这个数目会把处理的多个文件中行统计计数；
+	NF：Number of field 当前记录的field个数
+	FNR：记录各个文件行数
+	[aiobs@CMNET-AIOBS2 bms]$ cat /etc/passwd | grep zabbix | awk -F: '{print NF}'
+	7
+	[aiobs@CMNET-AIOBS2 bms]$ cat /etc/passwd | grep zabbix | awk -F: '{print $NF}'
+	/sbin/nologin
+	
+	[aiobs@CMNET-AIOBS2 bms]$ awk '{print FNR}' /etc/passwd /etc/hosts   #打印这两个文件行数，各自计数
+	[aiobs@CMNET-AIOBS2 bms]$ awk '{print NR}' /etc/passwd /etc/hosts
+	
+	
+	
+	
+	2.3 用户自定义变量
+	
+	[aiobs@CMNET-AIOBS2 bms]$ awk -v test="hello awk" 'BEGIN{print test}'
+	hello awk
+	[aiobs@CMNET-AIOBS2 bms]$ awk 'BEGIN{test="hello awk"; print test}'
+	hello awk
+	[aiobs@CMNET-AIOBS2 bms]$ 
+
+三、printf
+	printf format , item1,item2,...
+	
+		format 格式如下：
+			%c：显示字符ASCII码
+			%d,%i：十进制整数
+			%e，%E：科学计数法显示数值
+			%f：显示浮点数
+			%g，%G：科学计数法或浮点数显示
+			%s：显示字符串
+			%u：无符号整数
+			%%：显示%自身
+			
+			修饰符：
+				N：显示宽带
+				-：左对齐
+				+：显示数值符合
+				
+			bg：
+				awk -F: '{printf "%-15s %i\n",$1,$2}' /etc/passwd
+				awk -F: '{printf "%5d",$3}' /etc/passwd
+	   		awk -F: '{printf "%-5d\n",$3}' /etc/passwd
+
+六、awk操作符
+
+	6.1 算术操作符
+		-x ：负值
+		+x ：转换为数值
+		x^y :
+		x**y ：x的y次方
+		x*y ：
+		x/y ：
+		x+y ：
+		x-y ：
+		x%y ：取余
+		
+	6.2 字符串操作发
+	
+	6.3 赋值操作符
+		=
+		+=
+		-=
+		*=
+		/=
+		%=
+		^=
+		**=
+		
+		++
+		--
+	
+	6.4 布尔值
+	
+		awk 中，任何非0或非空字符串都为真，反之就为假
+		
+	6.5 比较操作符
+	
+		x < y
+		x <= y
+		x > y
+		x >= y
+		x == y
+		x != y
+		x ~ y
+		x !~ y
+		
+	6.6 表达式间逻辑关系
+	
+		&&
+		||
+	
+	6.7 条件表达式
+	
+		selector?if-true-exp:if-false-exp （三目运算符）
+		if 	selector;then
+		  if-true-exp
+		else
+		  if-false-exp
+		fi
+		
+		a=3
+		b=4
+		a>b?a is max:b is max
+		
+	6.8 函数调用
+	
+		function_name(para1,para2)
+	
+	
+
+
+七、awk模式
+
+	7.1 常见模式
+		7.1.1 正则表达式
+		[aiobs@CMNET-AIOBS2 ~]$ awk -F : '/^r/{print $1}' /etc/passwd     #显示以r开头的用户账号
+		root
+		rpc
+		rtkit
+		rpcuser
+		
+		7.1.2 表达式
+		[aiobs@CMNET-AIOBS2 ~]$ awk -F : '$3>=500{print $1,$3}' /etc/passwd  #显示用户ID号大于等于500的用户
+		aiobs 501
+		xzdnsaipso 504
+		alipms 506
+		zhaceming 508
+		jtcjxz 509
+		zabbix 511
+		...
+		
+		[aiobs@CMNET-AIOBS2 ~]$ awk -F : '$3+1>=500{print $1,$3}' /etc/passwd
+		[aiobs@CMNET-AIOBS2 ~]$ awk -F : '$7~"bash$"{print $1,$7}' /etc/passwd  #显示以/bin/bash的用户
+		root /bin/bash
+		alipms /bin/bash
+		...
+		awk -F : '$7!~"bash$"{print $1,$7}' /etc/passwd   #用户不为bash的用户
+		
+		[aiobs@CMNET-AIOBS2 ~]$ awk -F : '$1~"^a"{print $1,$7}' /etc/passwd   #显示以a开头的用户
+		apache /sbin/nologin
+		aiobs /bin/csh
+		alipms /bin/bash
+	  ... 
+	
+	
+	
+		7.1.2 指定范围
+		[aiobs@CMNET-AIOBS2 ~]$ awk -F : '$3==0,$7~"nologin"{print $1,$3,$7}' /etc/passwd #匹配ID=0到bash为nologin的账号信息
+		root 0 /bin/bash
+		bin 1 /sbin/nologin
+		
+		7.1.3 BEDIN 、END模式
+		[aiobs@CMNET-AIOBS2 ~]$ awk -F : 'BEGIN{print "UserName UID Shell"}{printf "%-10s%-10s%+30s\n",$1,$3,$7}' /etc/passwd  #BEGIN打印标题
+		UserName UID Shell
+		root      0                              /bin/bash
+		bin       1                          /sbin/nologin
+		daemon    2                          /sbin/nologin
+		...
+		awk -F : 'BEGIN{print "UserName UID Shell"}{printf "%-10s%-10s%+30s\n",$1,$3,$7}END{print "END report."}' /etc/passwd #END打印接我标题
+		...
+		zabbix    511                        /sbin/nologin
+		kdcs      512                            /bin/bash
+		END report.
+	
+	7.2 常见Action
+	
+		7.2.1 表达式
+		7.2.2 控制语句
+		7.2.3 复合语句
+		7.2.4 输入输出语句
+
+八、控制语句
+	8.1 if-else
+		[aiobs@CMNET-AIOBS2 ~]$ awk -F : '{if($3==0)print $1,"Admin";else print $1,"common User"}' /etc/passwd  #如果UID等于0，打印用户为Admin，否则打印用户为普通用户
+		root Admin
+		zabbix common User
+		kdcs common User
+		
+		[aiobs@CMNET-AIOBS2 ~]$ awk -F : 'BEGIN{print "UserName Usertype"}{if($1=="root")printf "%-15s: %s\n",$1,"Admin";else printf "%-15s: %s\n",$1,"common User"}' /etc/passwd
+		UserName Usertype
+		root           : Admin
+		bin            : common User
+		daemon         : common User
+		adm            : common User
+
+		...
+		
+		[aiobs@CMNET-AIOBS2 ~]$ awk -F : -v sum=0 'BEGIN{print "User UID gt 500 number"}{if ($3>=500) sum++}END{print sum}' /etc/passwd
+		User UID gt 500 number
+		14
+	8.2 while
+	8.3 do-while
+	8.4 for
+	8.5 case
+	8.6 break 和 continue
+	8.7 next
+
+九、awk中使用数组（进阶，统计日志很重要！！！）
+
+	9.1 数组
+		[aiobs@CMNET-AIOBS2 ~]$ awk -F: '{shell[$NF]++}END{for(A in shell) {print A,shell[A]}}' /etc/passwd  #打印每种shell用户总数
+		/bin/csh 2
+		/bin/bash 11
+		/sbin/nologin 46
+		
+		
+		
+		[aiobs@CMNET-AIOBS2 ~]$ netstat -tan | awk '/^tcp/{STATE[$NF]++}END{for(S in STATE) {print S,STATE[S]}}'   #打印tcp各连接状态总数
+		TIME_WAIT 45
+		CLOSE_WAIT 31
+		FIN_WAIT1 1
+		FIN_WAIT2 1
+		ESTABLISHED 155
+		LISTEN 38
+		
+		cat named.response | awk -F "|" '{counts[$1]++};END{for(ip in counts) print ip,counts[ip]}'  #统计每个IP访问次数
+		
+		
+十、awk内置函数
+
+	split ：
+	length ：返回string字符串的格式
+	substr：
+	systime()：取系统当前时间
+
+例子：
+      last -1 | awk '{print $1}       #显示第一行第一列
+      last | awk -F " " '{print $1}'
+      打印文件的第一列(域) ：         awk '{print $1}' filename
+      打印文件的前两列(域) ：         awk '{print $1,$2}' filename
+      打印完第一列，然后打印第二列 ： awk '{print $1 $2}' filename
+      打印文本文件的总行数  ：        awk 'END{print NR}' filename
+      打印文本第一行 ：               awk 'NR==1{print}' filename
+      打印文本第二行第一列：          sed -n "2, 1p" filename | awk 'print $1'
+
+      shell里面的赋值方法有两种，格式为
+        1) arg=`(命令)`
+        2) arg=$(命令)
+			因此，如果想要把某一文件的总行数赋值给变量nlines，可以表达为：
+        1) nlines=`(awk 'END{print NR}' filename)`
+			或者
+        2) nlines=$(awk 'END{print NR}' filename)
+	
+---------------------------------------------------------------
+
