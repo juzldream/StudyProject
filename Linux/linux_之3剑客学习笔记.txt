@@ -1,98 +1,98 @@
-grep£ºÎÄ±¾¹ıÂËÆ÷ 
+grepï¼šæ–‡æœ¬è¿‡æ»¤å™¨ 
 
 grep global Research [regular expression] 
 
-grep £º¸ù¾İÄ£Ê½ËÑË÷ÎÄ±¾£¬²¢½«·ûºÏÄ£Ê½µÄÎÄ±¾ĞĞÏÔÊ¾³öÀ´
+grep ï¼šæ ¹æ®æ¨¡å¼æœç´¢æ–‡æœ¬ï¼Œå¹¶å°†ç¬¦åˆæ¨¡å¼çš„æ–‡æœ¬è¡Œæ˜¾ç¤ºå‡ºæ¥
 
 grep [OPTIONS] PATTERN [FILE...]
-	-i £º²»Çø·Ö´óĞ¡Ğ´
-	--colour £º ¸ßÁÁÏÔÊ¾Æ¥Åäµ½µÄÎÄ±¾ĞĞ
+	-i ï¼šä¸åŒºåˆ†å¤§å°å†™
+	--colour ï¼š é«˜äº®æ˜¾ç¤ºåŒ¹é…åˆ°çš„æ–‡æœ¬è¡Œ
 		[aiobs@CMNET-AIOBS2 ~]$ grep --colour root /etc/passwd
 		root:x:0:0:root:/root:/bin/bash
 		operator:x:11:0:operator:/root:/sbin/nologin
-	-v £ºÏÔÊ¾Ã»ÓĞ±»Ä£Ê½Æ¥Åäµ½µÄÎÄ±¾ĞĞ
-	-o £ºÖ»ÏÔÊ¾±»Ä£Ê½Æ¥Åäµ½µÄ×Ö·û´®
+	-v ï¼šæ˜¾ç¤ºæ²¡æœ‰è¢«æ¨¡å¼åŒ¹é…åˆ°çš„æ–‡æœ¬è¡Œ
+	-o ï¼šåªæ˜¾ç¤ºè¢«æ¨¡å¼åŒ¹é…åˆ°çš„å­—ç¬¦ä¸²
 		[aiobs@CMNET-AIOBS2 ~]$ grep --colour -o root /etc/passwd
 		root
 		root
 		root
 		root
-	-E £ºÀ©Õ¹ÕıÔò±í´ïÊ½
-	-A #£ºÆ¥Åäµ½µÄĞĞÏòÏÂÏÔÊ¾ĞĞ
-		grep --color -A 2 '^core id' /proc/cpuinfo #ÏÔÊ¾Æ¥Åäµ½µÄĞĞÔÙÏòÏÂÏÔÊ¾2ĞĞ
-  -B #£ºÆ¥Åäµ½µÄĞĞÏòÉÏÏÔÊ¾ĞĞ
-  -C #£ºÆ¥Åäµ½µÄĞĞÏòÉÏºÍÏòÏÂÏÔÊ¾ĞĞ
+	-E ï¼šæ‰©å±•æ­£åˆ™è¡¨è¾¾å¼
+	-A #ï¼šåŒ¹é…åˆ°çš„è¡Œå‘ä¸‹æ˜¾ç¤ºè¡Œ
+		grep --color -A 2 '^core id' /proc/cpuinfo #æ˜¾ç¤ºåŒ¹é…åˆ°çš„è¡Œå†å‘ä¸‹æ˜¾ç¤º2è¡Œ
+        -B #ï¼šåŒ¹é…åˆ°çš„è¡Œå‘ä¸Šæ˜¾ç¤ºè¡Œ
+        -C #ï¼šåŒ¹é…åˆ°çš„è¡Œå‘ä¸Šå’Œå‘ä¸‹æ˜¾ç¤ºè¡Œ
 
 
-ÕıÔò±í´ïÊ½£ºREGular EXPression £¬REGEXP
+æ­£åˆ™è¡¨è¾¾å¼ï¼šREGular EXPression ï¼ŒREGEXP
 
 https://www.regular-expressions.info/
 https://regex101.com/  grep 
 http://json.org/
 
 
-[aiobs@CMNET-AIOBS2 bms]$ grep "^13659506831" log2019* --color  #ÒÔ^13659506831
-[aiobs@CMNET-AIOBS2 bms]$ grep "13659506831$" log2019* --color  #13659506831½áÎ²
-[aiobs@CMNET-AIOBS2 bms]$ grep -i "my" log2019* --color         #-i ²»Çø·Ö´óĞ¡Ğ´
-[aiobs@CMNET-AIOBS2 bms]$ grep -n . test.sh --color             #¹ıÂË°üº¬ÈÎÒâ×Ö·û £¬²¢ÏÔÊ¾ĞĞºÅ
-[aiobs@CMNET-AIOBS2 bms]$ grep -n "\." test.sh --color          #¹ıÂË´øÓĞ. µÄĞĞ£¬¡±\¡° ×ªÒâ
-[aiobs@CMNET-AIOBS2 ~]$ grep r..t /etc/passwd                   #¹ıÂËr¿ªÍ·ÖĞ¼äÈÎÒâÁ½¸ö×Ö·ût½áÎ²µÄĞĞ
+[aiobs@CMNET-AIOBS2 bms]$ grep "^13659506831" log2019* --color  #ä»¥^13659506831
+[aiobs@CMNET-AIOBS2 bms]$ grep "13659506831$" log2019* --color  #13659506831ç»“å°¾
+[aiobs@CMNET-AIOBS2 bms]$ grep -i "my" log2019* --color         #-i ä¸åŒºåˆ†å¤§å°å†™
+[aiobs@CMNET-AIOBS2 bms]$ grep -n . test.sh --color             #è¿‡æ»¤åŒ…å«ä»»æ„å­—ç¬¦ ï¼Œå¹¶æ˜¾ç¤ºè¡Œå·
+[aiobs@CMNET-AIOBS2 bms]$ grep -n "\." test.sh --color          #è¿‡æ»¤å¸¦æœ‰. çš„è¡Œï¼Œâ€\â€œ è½¬æ„
+[aiobs@CMNET-AIOBS2 ~]$ grep r..t /etc/passwd                   #è¿‡æ»¤rå¼€å¤´ä¸­é—´ä»»æ„ä¸¤ä¸ªå­—ç¬¦tç»“å°¾çš„è¡Œ
 
 
-egrep "3306|47808" /etc/services --colour                       # | »òÆ¥Åä¶à¸ö
+egrep "3306|47808" /etc/services --colour                       # | æˆ–åŒ¹é…å¤šä¸ª
 
-Ôª×Ö·û
+å…ƒå­—ç¬¦
 
 .
 []
 [^]
 [:digit:] [:lower:] [:upper:] [:punct:] [:space:] [:alpha:] [:alnum:]
 
-[aiobs@CMNET-AIOBS2 ~]$ grep '^[[:digit:]]' /etc/hosts  #ÏÔÊ¾ÒÔÊı×Ö¿ªÊ¼µÄĞĞ
+[aiobs@CMNET-AIOBS2 ~]$ grep '^[[:digit:]]' /etc/hosts  #æ˜¾ç¤ºä»¥æ•°å­—å¼€å§‹çš„è¡Œ
 
-Æ¥Åä´ÎÊı
-. £¨1£©´ú±íµ±Ç°Ä¿Â¼£»Òş²ØÎÄ¼ş±êÊ¶£»£¨2£©ÈÎÒâÒ»¸ö×Ö·û£»£¨3£©Ê¹µÃÒ»¸öÅäÖÃÎÄ¼şÉúĞ§£¨source /etc/profile  === . /etc/profile£©
-.. ´ú±íÉÏÒ»´ÎÄ¿Â¼£»
-*  Æ¥ÅäÆäÇ°ÃæµÄ×Ö·ûÈÎÒ»´Î
-.* ÈÎÒâ³¤¶ÈµÄÈÎÒâ×Ö·û
-|  »ò²éÕÒ¶à¸öÆ¥ÅäÌõ¼şµÄ×Ö·û
-+  ÖØ¸´Ò»¸ö»ò¶à¸ö
-£¿ ÖØ¸´o¸ö»ò1¸ö
-\{m,n\}   Æ¥ÅäÇ°Ãæ×Ö·ûÖÁÉÙm´Î£¬ÖÁ¶àn´Î
-	\{1,\}  Æ¥ÅäÇ°Ãæ×Ö·ûÖÁÉÙ1´Î£¬¶àÁË²»ÏŞÖÆ
-	\{0,3\} Æ¥ÅäÇ°Ãæ×Ö·ûÖÁÉÙ0´Î£¬ÖÁ¶à3´Î
+åŒ¹é…æ¬¡æ•°
+. ï¼ˆ1ï¼‰ä»£è¡¨å½“å‰ç›®å½•ï¼›éšè—æ–‡ä»¶æ ‡è¯†ï¼›ï¼ˆ2ï¼‰ä»»æ„ä¸€ä¸ªå­—ç¬¦ï¼›ï¼ˆ3ï¼‰ä½¿å¾—ä¸€ä¸ªé…ç½®æ–‡ä»¶ç”Ÿæ•ˆï¼ˆsource /etc/profile  === . /etc/profileï¼‰
+.. ä»£è¡¨ä¸Šä¸€æ¬¡ç›®å½•ï¼›
+*  åŒ¹é…å…¶å‰é¢çš„å­—ç¬¦ä»»ä¸€æ¬¡
+.* ä»»æ„é•¿åº¦çš„ä»»æ„å­—ç¬¦
+|  æˆ–æŸ¥æ‰¾å¤šä¸ªåŒ¹é…æ¡ä»¶çš„å­—ç¬¦
++  é‡å¤ä¸€ä¸ªæˆ–å¤šä¸ª
+ï¼Ÿ é‡å¤oä¸ªæˆ–1ä¸ª
+\{m,n\}   åŒ¹é…å‰é¢å­—ç¬¦è‡³å°‘mæ¬¡ï¼Œè‡³å¤šnæ¬¡
+	\{1,\}  åŒ¹é…å‰é¢å­—ç¬¦è‡³å°‘1æ¬¡ï¼Œå¤šäº†ä¸é™åˆ¶
+	\{0,3\} åŒ¹é…å‰é¢å­—ç¬¦è‡³å°‘0æ¬¡ï¼Œè‡³å¤š3æ¬¡
 
 
-	a¡¢b¡¢ab¡¢aab¡¢acb¡¢adb¡¢amnb
+	aã€bã€abã€aabã€acbã€adbã€amnb
 	a*b   # ab  aab 
 	a.*b  # ab aab acb adb amnb  
 	a?b   # b ab aab acb adb amdb 
 	
 	
-Î»ÖÃÃª¶¨
-^  Ãª¶¨ĞĞÊ×
+ä½ç½®é”šå®š
+^  é”šå®šè¡Œé¦–
 	grep "^r..t" /etc/passwd
-$  Ãª¶¨ĞĞÎ²
+$  é”šå®šè¡Œå°¾
 	grep "#$" /etc/inittab
-^$ ¿Õ°×ĞĞ
-	grep '^$' /etc/inittab #ÕÒÕâ¸öÎÄ¼ş¿Õ°×ĞĞ
-\< »òÕß\b  Ãª¶¨´ÊÊ×
-\> »òÕß\b  Ãª¶¨´ÊÎ²
+^$ ç©ºç™½è¡Œ
+	grep '^$' /etc/inittab #æ‰¾è¿™ä¸ªæ–‡ä»¶ç©ºç™½è¡Œ
+\< æˆ–è€…\b  é”šå®šè¯é¦–
+\> æˆ–è€…\b  é”šå®šè¯å°¾
 
-\<root\>  #¾«È·Æ¥Åäroot
+\<root\>  #ç²¾ç¡®åŒ¹é…root
 
-·Ö×é
-\(\) ·Ö×é
-	\(ad\)*  #ab¿ÉÒÔ³öÏÖÈÎÒâ´Î  
+åˆ†ç»„
+\(\) åˆ†ç»„
+	\(ad\)*  #abå¯ä»¥å‡ºç°ä»»æ„æ¬¡  
 
 
-ÌáÈ¡IP¡¢×ÓÍøÑÚÂë ¡¢Íø¹Ü
+æå–IPã€å­ç½‘æ©ç  ã€ç½‘ç®¡
 
 [xzdnsaipso@DQAS ~]$ ifconfig | sed -n 's#^.*addr:\([0-9].*\)  Bcast:\([0-9].*\)  Mask:\([0-9].*\)#\1 \2 \3#gp'
 117.136.159.44 117.136.159.47 255.255.255.248
 
 
-ÌáÈ¡MACµØÖ·
+æå–MACåœ°å€
 
 [xzdnsaipso@DQAS ~]$ ifconfig eth0 | sed -n 's#^.*HWaddr \([0-9].*\)#\1#gp'
 08:94:EF:33:5D:8C  
@@ -102,7 +102,7 @@ $  Ãª¶¨ĞĞÎ²
 08:94:EF:33:5D:8C
 
 
-ÌáÈ¡Íø¿¨µØÖ·£º
+æå–ç½‘å¡åœ°å€ï¼š
 
 ifconfig bond0 | grep "inet addr" | cut -d ":" -f2 | cut -d " " -f1
 ifconfig bond0 | grep  "inet addr" |awk -F "[: ]" '{print $13}'
@@ -116,11 +116,11 @@ ifconfig eth0 | sed -n 2p | sed 's#^.*addr:##g' | sed 's#  Bc.*$##g'
 ifconfig bond0 | sed -n 's#^.*addr:\(.*\)  Bcast.*$#\1#gp'
 
 
-ÌáÈ¡ÎÄ¼şÈ¨ÏŞ£º
+æå–æ–‡ä»¶æƒé™ï¼š
 
 [xzdnsaipso@DQAS ~]$ stat /etc/passwd
   File: "/etc/passwd"
-  Size: 3562      	Blocks: 8          IO Block: 4096   ÆÕÍ¨ÎÄ¼ş
+  Size: 3562      	Blocks: 8          IO Block: 4096   æ™®é€šæ–‡ä»¶
 Device: 803h/2051d	Inode: 8790242     Links: 1
 Access: (0644/-rw-r--r--)  Uid: (    0/    root)   Gid: (    0/    root)
 Access: 2019-10-24 10:16:26.837507746 +0800
@@ -168,76 +168,76 @@ fgrep
 
 ---------------------------------------------------------------
 	
-sed£ºÁ÷±à¼­Æ÷
+sedï¼šæµç¼–è¾‘å™¨
 
 sed:Stream EDitor
-	ĞĞ±à¼­Æ÷£¨vim È«ÆÁ±à¼­Æ÷£©
+	è¡Œç¼–è¾‘å™¨ï¼ˆvim å…¨å±ç¼–è¾‘å™¨ï¼‰
 
-sed£ºÄ£Ê½¿Õ¼ä
-	Ä¬ÈÏ²»±à¼­Ô´ÎÄ¼ş£¬½ö¶ÔÄ£Ê½¿Õ¼äµÄÊı¾İ×ö´¦Àí£»´¦ÀíÍê³Éºó½«Ä£Ê½¿Õ¼ä´òÓ¡³öÀ´
+sedï¼šæ¨¡å¼ç©ºé—´
+	é»˜è®¤ä¸ç¼–è¾‘æºæ–‡ä»¶ï¼Œä»…å¯¹æ¨¡å¼ç©ºé—´çš„æ•°æ®åšå¤„ç†ï¼›å¤„ç†å®Œæˆåå°†æ¨¡å¼ç©ºé—´æ‰“å°å‡ºæ¥
 
 
 sed [options] 'AddressCommand' file ...
-	-n :¾²Ä¬Ä£Ê½£¬²»ÔÚÏÔÊ¾Ä£Ê½¿Õ¼äÖĞµÄÄÚÈİ
-	-i :ĞŞ¸ÄÔ´ÎÄ¼ş
+	-n :é™é»˜æ¨¡å¼ï¼Œä¸åœ¨æ˜¾ç¤ºæ¨¡å¼ç©ºé—´ä¸­çš„å†…å®¹
+	-i :ä¿®æ”¹æºæ–‡ä»¶
 	-e :
 	-f : 
-	-r :À©Õ¹ÕıÔò±í´ïÊ½
+	-r :æ‰©å±•æ­£åˆ™è¡¨è¾¾å¼
 	
-Address£º
-	1¡¢StartLine£¬EndLine 
+Addressï¼š
+	1ã€StartLineï¼ŒEndLine 
 		1,100  
-		$ : ×îºóÒ»ĞĞ
-		$-1 :µ¹ÊıµÚ¶şĞĞ
-	2¡¢/RegExp/
+		$ : æœ€åä¸€è¡Œ
+		$-1 :å€’æ•°ç¬¬äºŒè¡Œ
+	2ã€/RegExp/
 		/^root/
-	3¡¢/pattern1/,/pattren2/	#µÚÒ»´Î±»pattern1Æ¥Åäµ½µÄĞĞ¿ªÊ¼£¬ÖÁµÚÒ»´Î±»pattern2Æ¥Åäµ½µÄĞĞ½áÊø£¬ÕâÖĞ¼äµÄËùÓĞĞĞ
-	4¡¢LineNumber #Ö¸¶¨µÄĞĞ
-	5¡¢StartLine,+N           #´ÓStartLineĞĞ¿ªÊ¼£¬ÏòºóNĞĞ
+	3ã€/pattern1/,/pattren2/	#ç¬¬ä¸€æ¬¡è¢«pattern1åŒ¹é…åˆ°çš„è¡Œå¼€å§‹ï¼Œè‡³ç¬¬ä¸€æ¬¡è¢«pattern2åŒ¹é…åˆ°çš„è¡Œç»“æŸï¼Œè¿™ä¸­é—´çš„æ‰€æœ‰è¡Œ
+	4ã€LineNumber #æŒ‡å®šçš„è¡Œ
+	5ã€StartLine,+N           #ä»StartLineè¡Œå¼€å§‹ï¼Œå‘åNè¡Œ
 		
-Command£º
-	d£ºÉ¾³ı·ûºÏÌõ¼şµÄĞĞ
+Commandï¼š
+	dï¼šåˆ é™¤ç¬¦åˆæ¡ä»¶çš„è¡Œ
 		[aiobs@CMNET-AIOBS1 ~]$ sed '1,2d' /etc/fstab 
-		nl back.txt | '2d'       														#É¾³ıµÚ¶şĞĞ
-    nl back.txt | sed '2,5d' 														#É¾³ı2µ½5ĞĞ
-  a£ºÔÚÖ¸¶¨ĞĞºóÃæ×·¼ÓĞÂĞĞ
-    nl back.txt | sed '2a hello world !'  							#µÚ2ĞĞ ºó Ôö¼Ó 'hello world !' 
-    nl back.txt | sed '2a hello world \...\' 						#²åÈë¶àĞĞ
-  i£ºÔÚÖ¸¶¨ĞĞÇ°Ãæ×·¼ÓĞÂĞĞ
-    nl back.txt | sed '2i hello world !'    						#µÚ2ĞĞ Ç° Ôö¼Ó 'hello world !'
-  c£ºÌæ»»ĞĞ 
-    sed '1,2c Hi this to juzldream.' /etc/fstab   	  	#Ìæ»»1µ½2ĞĞÄÚÈİÎªHi this to juzldream.
-  p£ºÏÔÊ¾·ûºÏÌõ¼şµÄĞĞ
-    nl back.txt  | sed -n '5,7p'             						#Ö»´òÓ¡5µ½7ĞĞ
-    [aiobs@CMNET-AIOBS1 ~]$ sed -n '/^\//p' /etc/fstab  #Ö»´òÓ¡ÒÔ¡°/¡±¿ªÍ·µÄĞĞ
-	r£º½«Ö¸¶¨ÎÄ¼şÌí¼Óµ½·ûºÏÌõ¼şµÄĞĞ
-		root@CMNET-AIOBS1# sed '1,2r /etc/fstab' /etc/hosts #½«/etc/fstabÎÄ¼şÄÚÈİÌí¼Óµ½ /etc/hosts µÚ1ĞĞºÍµÚ2ĞĞºóÃæ
-	w£º½«·ûºÏÌõ¼şµÄĞĞ´òÓ¡´óÖ¸¶¨ÎÄ¼şÖĞ
-		sed -n '/^#/w /tmp/fstab' /etc/fstab                #½«ÎÄ¼ş/etc/fstabÖĞÒÔ#¿ªÍ·µÄĞĞ´òÓ¡µ½/tmp/fstabÎÄ¼şÖĞ
-	s£º²éÕÒ²¢Ìæ»»
-		sed 's/oot/OOT/' /etc/fstab                         #²éÕÒoot²¢Ìæ»»OOT
-		sed 's/^\#/$/' /etc/fstab														#½«ĞĞÊ×#Ìæ»»³É$£¬µÚÒ»´Î±»Ä£Ê½Æ¥Åäµ½µÄ×Ö·û´®
-			-g£ºÈ«¾ÖÌæ»»
-			-i£ººöÂÔ×Ö·û´óĞ¡Ğ´
-		sed 's/\//$/g' /etc/fstab														#½«ÒÔ¡°/¡±È«¾ÖÌæ»»Îª¡°$¡±  £¬µÈ¼ÛÓÚ£º  sed 's@/@$@g' /etc/fstab  
-		sed 's@d\(ev\)@D\1@g' /etc/fstab                    #½«ÎÄ¼ş/etc/fstabÖĞ dev È«¾ÖdÌæ»»ÎªD 
-		history | sed "s@[[:space:]]@@g"                    #½«history¿Õ°×Ìæ»»µô  
+		nl back.txt | '2d'       														#åˆ é™¤ç¬¬äºŒè¡Œ
+                  nl back.txt | sed '2,5d' 														#åˆ é™¤2åˆ°5è¡Œ
+        aï¼šåœ¨æŒ‡å®šè¡Œåé¢è¿½åŠ æ–°è¡Œ
+    		nl back.txt | sed '2a hello world !'  			#ç¬¬2è¡Œ å å¢åŠ  'hello world !' 
+    		nl back.txt | sed '2a hello world \...\' 		#æ’å…¥å¤šè¡Œ
+ 	iï¼šåœ¨æŒ‡å®šè¡Œå‰é¢è¿½åŠ æ–°è¡Œ
+   		nl back.txt | sed '2i hello world !'    		#ç¬¬2è¡Œ å‰ å¢åŠ  'hello world !'
+  	cï¼šæ›¿æ¢è¡Œ 
+    		sed '1,2c Hi this to juzldream.' /etc/fstab   	  	#æ›¿æ¢1åˆ°2è¡Œå†…å®¹ä¸ºHi this to juzldream.
+  	pï¼šæ˜¾ç¤ºç¬¦åˆæ¡ä»¶çš„è¡Œ
+    		nl back.txt  | sed -n '5,7p'            		#åªæ‰“å°5åˆ°7è¡Œ
+   		[aiobs@CMNET-AIOBS1 ~]$ sed -n '/^\//p' /etc/fstab  #åªæ‰“å°ä»¥â€œ/â€å¼€å¤´çš„è¡Œ
+	rï¼šå°†æŒ‡å®šæ–‡ä»¶æ·»åŠ åˆ°ç¬¦åˆæ¡ä»¶çš„è¡Œ
+		root@CMNET-AIOBS1# sed '1,2r /etc/fstab' /etc/hosts #å°†/etc/fstabæ–‡ä»¶å†…å®¹æ·»åŠ åˆ° /etc/hosts ç¬¬1è¡Œå’Œç¬¬2è¡Œåé¢
+	wï¼šå°†ç¬¦åˆæ¡ä»¶çš„è¡Œæ‰“å°å¤§æŒ‡å®šæ–‡ä»¶ä¸­
+		sed -n '/^#/w /tmp/fstab' /etc/fstab                #å°†æ–‡ä»¶/etc/fstabä¸­ä»¥#å¼€å¤´çš„è¡Œæ‰“å°åˆ°/tmp/fstabæ–‡ä»¶ä¸­
+	sï¼šæŸ¥æ‰¾å¹¶æ›¿æ¢
+		sed 's/oot/OOT/' /etc/fstab                         #æŸ¥æ‰¾ootå¹¶æ›¿æ¢OOT
+		sed 's/^\#/$/' /etc/fstab														#å°†è¡Œé¦–#æ›¿æ¢æˆ$ï¼Œç¬¬ä¸€æ¬¡è¢«æ¨¡å¼åŒ¹é…åˆ°çš„å­—ç¬¦ä¸²
+			-gï¼šå…¨å±€æ›¿æ¢
+			-iï¼šå¿½ç•¥å­—ç¬¦å¤§å°å†™
+		sed 's/\//$/g' /etc/fstab														#å°†ä»¥â€œ/â€å…¨å±€æ›¿æ¢ä¸ºâ€œ$â€  ï¼Œç­‰ä»·äºï¼š  sed 's@/@$@g' /etc/fstab  
+		sed 's@d\(ev\)@D\1@g' /etc/fstab                    #å°†æ–‡ä»¶/etc/fstabä¸­ dev å…¨å±€dæ›¿æ¢ä¸ºD 
+		history | sed "s@[[:space:]]@@g"                    #å°†historyç©ºç™½æ›¿æ¢æ‰  
 
 ---------------------------------------------------------------
 
 
 
 
-awk£º±¨¸æÉú³ÉÆ÷
-	¸ñÊ½»¯ºó£ºÏÔÊ¾
+awkï¼šæŠ¥å‘Šç”Ÿæˆå™¨
+	æ ¼å¼åŒ–åï¼šæ˜¾ç¤º
 	
 nawk gwak 
 
-	eg£»
-			[aiobs@CMNET-AIOBS2 ~]$ which awk
-			/usr/bin/awk
-			[aiobs@CMNET-AIOBS2 ~]$ ll /usr/bin/awk
-			lrwxrwxrwx. 1 root root 14 Oct 19  2016 /usr/bin/awk -> ../../bin/gawk
+	egï¼š
+	   [aiobs@CMNET-AIOBS2 ~]$ which awk
+	   /usr/bin/awk
+	   [aiobs@CMNET-AIOBS2 ~]$ ll /usr/bin/awk
+	   lrwxrwxrwx. 1 root root 14 Oct 19  2016 /usr/bin/awk -> ../../bin/gawk
 
 
 AWK a.k.a Aho,Kernighan and Weinberger
@@ -262,7 +262,7 @@ AWK a.k.a Aho,Kernighan and Weinberger
 
 
 
-Ò»¡¢print Ê¹ÓÃ
+ä¸€ã€print ä½¿ç”¨
 
 	pring item1,item2 ...
 	
@@ -279,34 +279,34 @@ AWK a.k.a Aho,Kernighan and Weinberger
 	kdcs 512
 	...
 
-¶ş¡¢awk±äÁ¿
-	2.1 awkÄÚÖÃ±äÁ¿Ö®¼ÇÂ¼±äÁ¿
-	FS£ºField separator ¶ÁÈ¡ÎÄ¼şÊ±£¬ËùÊ¹ÓÃ×Ö¶Î·Ö¸ô·û£»
-	RS£ºRecord separator ÊäÈëÎÄ¼şĞÅÏ¢ËùÊ¹ÓÃµÄ»»ĞĞ·û£»
-	OFS£ºOutput Filed Separtor
-	ORS£ºOutput Row Separator
+äºŒã€awkå˜é‡
+	2.1 awkå†…ç½®å˜é‡ä¹‹è®°å½•å˜é‡
+	FSï¼šField separator è¯»å–æ–‡ä»¶æ—¶ï¼Œæ‰€ä½¿ç”¨å­—æ®µåˆ†éš”ç¬¦ï¼›
+	RSï¼šRecord separator è¾“å…¥æ–‡ä»¶ä¿¡æ¯æ‰€ä½¿ç”¨çš„æ¢è¡Œç¬¦ï¼›
+	OFSï¼šOutput Filed Separtor
+	ORSï¼šOutput Row Separator
 	
 	awk -F:
 	OFS='#'
 	FS=":"
 
-	2.2 awkÄÚÖÃ±äÁ¿Ö®Êı¾İ±äÁ¿
+	2.2 awkå†…ç½®å˜é‡ä¹‹æ•°æ®å˜é‡
 	
-	NR£ºthe number of input recods £¬awkÃüÁîËù´¦ÀíµÄ¼ÇÂ¼Êı£¬Èç¹ûÓĞ¶à¸öÎÄ¼ş£¬Õâ¸öÊıÄ¿»á°Ñ´¦ÀíµÄ¶à¸öÎÄ¼şÖĞĞĞÍ³¼Æ¼ÆÊı£»
-	NF£ºNumber of field µ±Ç°¼ÇÂ¼µÄfield¸öÊı
-	FNR£º¼ÇÂ¼¸÷¸öÎÄ¼şĞĞÊı
+	NRï¼šthe number of input recods ï¼Œawkå‘½ä»¤æ‰€å¤„ç†çš„è®°å½•æ•°ï¼Œå¦‚æœæœ‰å¤šä¸ªæ–‡ä»¶ï¼Œè¿™ä¸ªæ•°ç›®ä¼šæŠŠå¤„ç†çš„å¤šä¸ªæ–‡ä»¶ä¸­è¡Œç»Ÿè®¡è®¡æ•°ï¼›
+	NFï¼šNumber of field å½“å‰è®°å½•çš„fieldä¸ªæ•°
+	FNRï¼šè®°å½•å„ä¸ªæ–‡ä»¶è¡Œæ•°
 	[aiobs@CMNET-AIOBS2 bms]$ cat /etc/passwd | grep zabbix | awk -F: '{print NF}'
 	7
 	[aiobs@CMNET-AIOBS2 bms]$ cat /etc/passwd | grep zabbix | awk -F: '{print $NF}'
 	/sbin/nologin
 	
-	[aiobs@CMNET-AIOBS2 bms]$ awk '{print FNR}' /etc/passwd /etc/hosts   #´òÓ¡ÕâÁ½¸öÎÄ¼şĞĞÊı£¬¸÷×Ô¼ÆÊı
+	[aiobs@CMNET-AIOBS2 bms]$ awk '{print FNR}' /etc/passwd /etc/hosts   #æ‰“å°è¿™ä¸¤ä¸ªæ–‡ä»¶è¡Œæ•°ï¼Œå„è‡ªè®¡æ•°
 	[aiobs@CMNET-AIOBS2 bms]$ awk '{print NR}' /etc/passwd /etc/hosts
 	
 	
 	
 	
-	2.3 ÓÃ»§×Ô¶¨Òå±äÁ¿
+	2.3 ç”¨æˆ·è‡ªå®šä¹‰å˜é‡
 	
 	[aiobs@CMNET-AIOBS2 bms]$ awk -v test="hello awk" 'BEGIN{print test}'
 	hello awk
@@ -314,45 +314,45 @@ AWK a.k.a Aho,Kernighan and Weinberger
 	hello awk
 	[aiobs@CMNET-AIOBS2 bms]$ 
 
-Èı¡¢printf
+ä¸‰ã€printf
 	printf format , item1,item2,...
 	
-		format ¸ñÊ½ÈçÏÂ£º
-			%c£ºÏÔÊ¾×Ö·ûASCIIÂë
-			%d,%i£ºÊ®½øÖÆÕûÊı
-			%e£¬%E£º¿ÆÑ§¼ÆÊı·¨ÏÔÊ¾ÊıÖµ
-			%f£ºÏÔÊ¾¸¡µãÊı
-			%g£¬%G£º¿ÆÑ§¼ÆÊı·¨»ò¸¡µãÊıÏÔÊ¾
-			%s£ºÏÔÊ¾×Ö·û´®
-			%u£ºÎŞ·ûºÅÕûÊı
-			%%£ºÏÔÊ¾%×ÔÉí
+		format æ ¼å¼å¦‚ä¸‹ï¼š
+			%cï¼šæ˜¾ç¤ºå­—ç¬¦ASCIIç 
+			%d,%iï¼šåè¿›åˆ¶æ•´æ•°
+			%eï¼Œ%Eï¼šç§‘å­¦è®¡æ•°æ³•æ˜¾ç¤ºæ•°å€¼
+			%fï¼šæ˜¾ç¤ºæµ®ç‚¹æ•°
+			%gï¼Œ%Gï¼šç§‘å­¦è®¡æ•°æ³•æˆ–æµ®ç‚¹æ•°æ˜¾ç¤º
+			%sï¼šæ˜¾ç¤ºå­—ç¬¦ä¸²
+			%uï¼šæ— ç¬¦å·æ•´æ•°
+			%%ï¼šæ˜¾ç¤º%è‡ªèº«
 			
-			ĞŞÊÎ·û£º
-				N£ºÏÔÊ¾¿í´ø
-				-£º×ó¶ÔÆë
-				+£ºÏÔÊ¾ÊıÖµ·ûºÏ
+			ä¿®é¥°ç¬¦ï¼š
+				Nï¼šæ˜¾ç¤ºå®½å¸¦
+				-ï¼šå·¦å¯¹é½
+				+ï¼šæ˜¾ç¤ºæ•°å€¼ç¬¦åˆ
 				
-			bg£º
+			bgï¼š
 				awk -F: '{printf "%-15s %i\n",$1,$2}' /etc/passwd
 				awk -F: '{printf "%5d",$3}' /etc/passwd
 	   		awk -F: '{printf "%-5d\n",$3}' /etc/passwd
 
-Áù¡¢awk²Ù×÷·û
+å…­ã€awkæ“ä½œç¬¦
 
-	6.1 ËãÊõ²Ù×÷·û
-		-x £º¸ºÖµ
-		+x £º×ª»»ÎªÊıÖµ
+	6.1 ç®—æœ¯æ“ä½œç¬¦
+		-x ï¼šè´Ÿå€¼
+		+x ï¼šè½¬æ¢ä¸ºæ•°å€¼
 		x^y :
-		x**y £ºxµÄy´Î·½
-		x*y £º
-		x/y £º
-		x+y £º
-		x-y £º
-		x%y £ºÈ¡Óà
+		x**y ï¼šxçš„yæ¬¡æ–¹
+		x*y ï¼š
+		x/y ï¼š
+		x+y ï¼š
+		x-y ï¼š
+		x%y ï¼šå–ä½™
 		
-	6.2 ×Ö·û´®²Ù×÷·¢
+	6.2 å­—ç¬¦ä¸²æ“ä½œå‘
 	
-	6.3 ¸³Öµ²Ù×÷·û
+	6.3 èµ‹å€¼æ“ä½œç¬¦
 		=
 		+=
 		-=
@@ -365,11 +365,11 @@ AWK a.k.a Aho,Kernighan and Weinberger
 		++
 		--
 	
-	6.4 ²¼¶ûÖµ
+	6.4 å¸ƒå°”å€¼
 	
-		awk ÖĞ£¬ÈÎºÎ·Ç0»ò·Ç¿Õ×Ö·û´®¶¼ÎªÕæ£¬·´Ö®¾ÍÎª¼Ù
+		awk ä¸­ï¼Œä»»ä½•é0æˆ–éç©ºå­—ç¬¦ä¸²éƒ½ä¸ºçœŸï¼Œåä¹‹å°±ä¸ºå‡
 		
-	6.5 ±È½Ï²Ù×÷·û
+	6.5 æ¯”è¾ƒæ“ä½œç¬¦
 	
 		x < y
 		x <= y
@@ -380,14 +380,14 @@ AWK a.k.a Aho,Kernighan and Weinberger
 		x ~ y
 		x !~ y
 		
-	6.6 ±í´ïÊ½¼äÂß¼­¹ØÏµ
+	6.6 è¡¨è¾¾å¼é—´é€»è¾‘å…³ç³»
 	
 		&&
 		||
 	
-	6.7 Ìõ¼ş±í´ïÊ½
+	6.7 æ¡ä»¶è¡¨è¾¾å¼
 	
-		selector?if-true-exp:if-false-exp £¨ÈıÄ¿ÔËËã·û£©
+		selector?if-true-exp:if-false-exp ï¼ˆä¸‰ç›®è¿ç®—ç¬¦ï¼‰
 		if 	selector;then
 		  if-true-exp
 		else
@@ -398,25 +398,25 @@ AWK a.k.a Aho,Kernighan and Weinberger
 		b=4
 		a>b?a is max:b is max
 		
-	6.8 º¯Êıµ÷ÓÃ
+	6.8 å‡½æ•°è°ƒç”¨
 	
 		function_name(para1,para2)
 	
 	
 
 
-Æß¡¢awkÄ£Ê½
+ä¸ƒã€awkæ¨¡å¼
 
-	7.1 ³£¼ûÄ£Ê½
-		7.1.1 ÕıÔò±í´ïÊ½
-		[aiobs@CMNET-AIOBS2 ~]$ awk -F : '/^r/{print $1}' /etc/passwd     #ÏÔÊ¾ÒÔr¿ªÍ·µÄÓÃ»§ÕËºÅ
+	7.1 å¸¸è§æ¨¡å¼
+		7.1.1 æ­£åˆ™è¡¨è¾¾å¼
+		[aiobs@CMNET-AIOBS2 ~]$ awk -F : '/^r/{print $1}' /etc/passwd     #æ˜¾ç¤ºä»¥rå¼€å¤´çš„ç”¨æˆ·è´¦å·
 		root
 		rpc
 		rtkit
 		rpcuser
 		
-		7.1.2 ±í´ïÊ½
-		[aiobs@CMNET-AIOBS2 ~]$ awk -F : '$3>=500{print $1,$3}' /etc/passwd  #ÏÔÊ¾ÓÃ»§IDºÅ´óÓÚµÈÓÚ500µÄÓÃ»§
+		7.1.2 è¡¨è¾¾å¼
+		[aiobs@CMNET-AIOBS2 ~]$ awk -F : '$3>=500{print $1,$3}' /etc/passwd  #æ˜¾ç¤ºç”¨æˆ·IDå·å¤§äºç­‰äº500çš„ç”¨æˆ·
 		aiobs 501
 		xzdnsaipso 504
 		alipms 506
@@ -426,13 +426,13 @@ AWK a.k.a Aho,Kernighan and Weinberger
 		...
 		
 		[aiobs@CMNET-AIOBS2 ~]$ awk -F : '$3+1>=500{print $1,$3}' /etc/passwd
-		[aiobs@CMNET-AIOBS2 ~]$ awk -F : '$7~"bash$"{print $1,$7}' /etc/passwd  #ÏÔÊ¾ÒÔ/bin/bashµÄÓÃ»§
+		[aiobs@CMNET-AIOBS2 ~]$ awk -F : '$7~"bash$"{print $1,$7}' /etc/passwd  #æ˜¾ç¤ºä»¥/bin/bashçš„ç”¨æˆ·
 		root /bin/bash
 		alipms /bin/bash
 		...
-		awk -F : '$7!~"bash$"{print $1,$7}' /etc/passwd   #ÓÃ»§²»ÎªbashµÄÓÃ»§
+		awk -F : '$7!~"bash$"{print $1,$7}' /etc/passwd   #ç”¨æˆ·ä¸ä¸ºbashçš„ç”¨æˆ·
 		
-		[aiobs@CMNET-AIOBS2 ~]$ awk -F : '$1~"^a"{print $1,$7}' /etc/passwd   #ÏÔÊ¾ÒÔa¿ªÍ·µÄÓÃ»§
+		[aiobs@CMNET-AIOBS2 ~]$ awk -F : '$1~"^a"{print $1,$7}' /etc/passwd   #æ˜¾ç¤ºä»¥aå¼€å¤´çš„ç”¨æˆ·
 		apache /sbin/nologin
 		aiobs /bin/csh
 		alipms /bin/bash
@@ -440,34 +440,34 @@ AWK a.k.a Aho,Kernighan and Weinberger
 	
 	
 	
-		7.1.2 Ö¸¶¨·¶Î§
-		[aiobs@CMNET-AIOBS2 ~]$ awk -F : '$3==0,$7~"nologin"{print $1,$3,$7}' /etc/passwd #Æ¥ÅäID=0µ½bashÎªnologinµÄÕËºÅĞÅÏ¢
+		7.1.2 æŒ‡å®šèŒƒå›´
+		[aiobs@CMNET-AIOBS2 ~]$ awk -F : '$3==0,$7~"nologin"{print $1,$3,$7}' /etc/passwd #åŒ¹é…ID=0åˆ°bashä¸ºnologinçš„è´¦å·ä¿¡æ¯
 		root 0 /bin/bash
 		bin 1 /sbin/nologin
 		
-		7.1.3 BEDIN ¡¢ENDÄ£Ê½
-		[aiobs@CMNET-AIOBS2 ~]$ awk -F : 'BEGIN{print "UserName UID Shell"}{printf "%-10s%-10s%+30s\n",$1,$3,$7}' /etc/passwd  #BEGIN´òÓ¡±êÌâ
+		7.1.3 BEDIN ã€ENDæ¨¡å¼
+		[aiobs@CMNET-AIOBS2 ~]$ awk -F : 'BEGIN{print "UserName UID Shell"}{printf "%-10s%-10s%+30s\n",$1,$3,$7}' /etc/passwd  #BEGINæ‰“å°æ ‡é¢˜
 		UserName UID Shell
 		root      0                              /bin/bash
 		bin       1                          /sbin/nologin
 		daemon    2                          /sbin/nologin
 		...
-		awk -F : 'BEGIN{print "UserName UID Shell"}{printf "%-10s%-10s%+30s\n",$1,$3,$7}END{print "END report."}' /etc/passwd #END´òÓ¡½ÓÎÒ±êÌâ
+		awk -F : 'BEGIN{print "UserName UID Shell"}{printf "%-10s%-10s%+30s\n",$1,$3,$7}END{print "END report."}' /etc/passwd #ENDæ‰“å°æ¥æˆ‘æ ‡é¢˜
 		...
 		zabbix    511                        /sbin/nologin
 		kdcs      512                            /bin/bash
 		END report.
 	
-	7.2 ³£¼ûAction
+	7.2 å¸¸è§Action
 	
-		7.2.1 ±í´ïÊ½
-		7.2.2 ¿ØÖÆÓï¾ä
-		7.2.3 ¸´ºÏÓï¾ä
-		7.2.4 ÊäÈëÊä³öÓï¾ä
+		7.2.1 è¡¨è¾¾å¼
+		7.2.2 æ§åˆ¶è¯­å¥
+		7.2.3 å¤åˆè¯­å¥
+		7.2.4 è¾“å…¥è¾“å‡ºè¯­å¥
 
-°Ë¡¢¿ØÖÆÓï¾ä
+å…«ã€æ§åˆ¶è¯­å¥
 	8.1 if-else
-		[aiobs@CMNET-AIOBS2 ~]$ awk -F : '{if($3==0)print $1,"Admin";else print $1,"common User"}' /etc/passwd  #Èç¹ûUIDµÈÓÚ0£¬´òÓ¡ÓÃ»§ÎªAdmin£¬·ñÔò´òÓ¡ÓÃ»§ÎªÆÕÍ¨ÓÃ»§
+		[aiobs@CMNET-AIOBS2 ~]$ awk -F : '{if($3==0)print $1,"Admin";else print $1,"common User"}' /etc/passwd  #å¦‚æœUIDç­‰äº0ï¼Œæ‰“å°ç”¨æˆ·ä¸ºAdminï¼Œå¦åˆ™æ‰“å°ç”¨æˆ·ä¸ºæ™®é€šç”¨æˆ·
 		root Admin
 		zabbix common User
 		kdcs common User
@@ -488,20 +488,20 @@ AWK a.k.a Aho,Kernighan and Weinberger
 	8.3 do-while
 	8.4 for
 	8.5 case
-	8.6 break ºÍ continue
+	8.6 break å’Œ continue
 	8.7 next
 
-¾Å¡¢awkÖĞÊ¹ÓÃÊı×é£¨½ø½×£¬Í³¼ÆÈÕÖ¾ºÜÖØÒª£¡£¡£¡£©
+ä¹ã€awkä¸­ä½¿ç”¨æ•°ç»„ï¼ˆè¿›é˜¶ï¼Œç»Ÿè®¡æ—¥å¿—å¾ˆé‡è¦ï¼ï¼ï¼ï¼‰
 
-	9.1 Êı×é
-		[aiobs@CMNET-AIOBS2 ~]$ awk -F: '{shell[$NF]++}END{for(A in shell) {print A,shell[A]}}' /etc/passwd  #´òÓ¡Ã¿ÖÖshellÓÃ»§×ÜÊı
+	9.1 æ•°ç»„
+		[aiobs@CMNET-AIOBS2 ~]$ awk -F: '{shell[$NF]++}END{for(A in shell) {print A,shell[A]}}' /etc/passwd  #æ‰“å°æ¯ç§shellç”¨æˆ·æ€»æ•°
 		/bin/csh 2
 		/bin/bash 11
 		/sbin/nologin 46
 		
 		
 		
-		[aiobs@CMNET-AIOBS2 ~]$ netstat -tan | awk '/^tcp/{STATE[$NF]++}END{for(S in STATE) {print S,STATE[S]}}'   #´òÓ¡tcp¸÷Á¬½Ó×´Ì¬×ÜÊı
+		[aiobs@CMNET-AIOBS2 ~]$ netstat -tan | awk '/^tcp/{STATE[$NF]++}END{for(S in STATE) {print S,STATE[S]}}'   #æ‰“å°tcpå„è¿æ¥çŠ¶æ€æ€»æ•°
 		TIME_WAIT 45
 		CLOSE_WAIT 31
 		FIN_WAIT1 1
@@ -509,32 +509,32 @@ AWK a.k.a Aho,Kernighan and Weinberger
 		ESTABLISHED 155
 		LISTEN 38
 		
-		cat named.response | awk -F "|" '{counts[$1]++};END{for(ip in counts) print ip,counts[ip]}'  #Í³¼ÆÃ¿¸öIP·ÃÎÊ´ÎÊı
+		cat named.response | awk -F "|" '{counts[$1]++};END{for(ip in counts) print ip,counts[ip]}'  #ç»Ÿè®¡æ¯ä¸ªIPè®¿é—®æ¬¡æ•°
 		
 		
-Ê®¡¢awkÄÚÖÃº¯Êı
+åã€awkå†…ç½®å‡½æ•°
 
-	split £º
-	length £º·µ»Østring×Ö·û´®µÄ¸ñÊ½
-	substr£º
-	systime()£ºÈ¡ÏµÍ³µ±Ç°Ê±¼ä
+	split ï¼š
+	length ï¼šè¿”å›stringå­—ç¬¦ä¸²çš„æ ¼å¼
+	substrï¼š
+	systime()ï¼šå–ç³»ç»Ÿå½“å‰æ—¶é—´
 
-Àı×Ó£º
-      last -1 | awk '{print $1}       #ÏÔÊ¾µÚÒ»ĞĞµÚÒ»ÁĞ
+ä¾‹å­ï¼š
+      last -1 | awk '{print $1}       #æ˜¾ç¤ºç¬¬ä¸€è¡Œç¬¬ä¸€åˆ—
       last | awk -F " " '{print $1}'
-      ´òÓ¡ÎÄ¼şµÄµÚÒ»ÁĞ(Óò) £º         awk '{print $1}' filename
-      ´òÓ¡ÎÄ¼şµÄÇ°Á½ÁĞ(Óò) £º         awk '{print $1,$2}' filename
-      ´òÓ¡ÍêµÚÒ»ÁĞ£¬È»ºó´òÓ¡µÚ¶şÁĞ £º awk '{print $1 $2}' filename
-      ´òÓ¡ÎÄ±¾ÎÄ¼şµÄ×ÜĞĞÊı  £º        awk 'END{print NR}' filename
-      ´òÓ¡ÎÄ±¾µÚÒ»ĞĞ £º               awk 'NR==1{print}' filename
-      ´òÓ¡ÎÄ±¾µÚ¶şĞĞµÚÒ»ÁĞ£º          sed -n "2, 1p" filename | awk 'print $1'
+      æ‰“å°æ–‡ä»¶çš„ç¬¬ä¸€åˆ—(åŸŸ) ï¼š         awk '{print $1}' filename
+      æ‰“å°æ–‡ä»¶çš„å‰ä¸¤åˆ—(åŸŸ) ï¼š         awk '{print $1,$2}' filename
+      æ‰“å°å®Œç¬¬ä¸€åˆ—ï¼Œç„¶åæ‰“å°ç¬¬äºŒåˆ— ï¼š awk '{print $1 $2}' filename
+      æ‰“å°æ–‡æœ¬æ–‡ä»¶çš„æ€»è¡Œæ•°  ï¼š        awk 'END{print NR}' filename
+      æ‰“å°æ–‡æœ¬ç¬¬ä¸€è¡Œ ï¼š               awk 'NR==1{print}' filename
+      æ‰“å°æ–‡æœ¬ç¬¬äºŒè¡Œç¬¬ä¸€åˆ—ï¼š          sed -n "2, 1p" filename | awk 'print $1'
 
-      shellÀïÃæµÄ¸³Öµ·½·¨ÓĞÁ½ÖÖ£¬¸ñÊ½Îª
-        1) arg=`(ÃüÁî)`
-        2) arg=$(ÃüÁî)
-			Òò´Ë£¬Èç¹ûÏëÒª°ÑÄ³Ò»ÎÄ¼şµÄ×ÜĞĞÊı¸³Öµ¸ø±äÁ¿nlines£¬¿ÉÒÔ±í´ïÎª£º
+      shellé‡Œé¢çš„èµ‹å€¼æ–¹æ³•æœ‰ä¸¤ç§ï¼Œæ ¼å¼ä¸º
+        1) arg=`(å‘½ä»¤)`
+        2) arg=$(å‘½ä»¤)
+			å› æ­¤ï¼Œå¦‚æœæƒ³è¦æŠŠæŸä¸€æ–‡ä»¶çš„æ€»è¡Œæ•°èµ‹å€¼ç»™å˜é‡nlinesï¼Œå¯ä»¥è¡¨è¾¾ä¸ºï¼š
         1) nlines=`(awk 'END{print NR}' filename)`
-			»òÕß
+			æˆ–è€…
         2) nlines=$(awk 'END{print NR}' filename)
 	
 ---------------------------------------------------------------
