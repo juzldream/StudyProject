@@ -1,0 +1,194 @@
+
+
+防火墙：硬件、软件：规则（匹配标准，处理办法）
+
+
+Framework：
+	默认规则：
+		开发：堵
+		关闭：通
+		
+规则：匹配标准
+
+	IP：SIP,DIP
+	TCP：SPORT,DPORT 	SYN=1,FIN=0RST=0ACK=0;	SYN=1,ACK=1,FIN=0,RST=0;	ACK=1,SYN=0,RST=0,FIN=0(ESTABLISHED)
+	UDP：SPORT,DPORT
+	ICMP:icmp-type
+	
+数据报文过滤
+
+hook function ： 钩子函数
+	prerouting
+	input
+	output
+	forward
+	postrouting
+	
+	规则链：
+		PREROUTING
+		INPUT
+		OUTPUT
+		FORWARD
+		POSTROUTING
+		
+filter（过滤）：表
+	INPUT
+	OUTPUT
+	FORWARD
+
+nat（地址转换）：表
+	PREROUTING
+	OUTPUT
+	POSTROUTING
+	
+	
+mangle（拆开、修改、封装报文首部）：表
+	PREROUTING
+	INPUT
+	OUTPUT
+	FORWARD
+	POSTROUTING
+	
+	
+raw（）：表
+	PREROUTING
+	OUTPUT
+	
+
+四表五链 ，表优先级为：raw mangle nat filter
+	
+支持自定义链，默认链无法删除
+
+每个规则都有两个内置计数器
+	被匹配的报文个数
+	被匹配的报文大小之和
+	
+iptables [-t TABLE] COMMAND CHAIN [NUM] 匹配标准 -j 处理办法
+
+
+匹配标准：
+	通用匹配
+		-s 指定源地址
+		-d 指定目标地址
+		-p （tcp|upd|icmp） 指定协议
+		-i  INTERFACE 指定报文流入的接口
+			可用于定义的标准链：PREROUTING、INPUT、FORWARD
+		-o  INTERFACE 指定报文流出的接口
+			可用于定义的标准链：OUTPUT、POSTROUTING、FORWARD
+			
+			
+	扩展匹配  rpm -ql iptables	
+		隐含扩展 ：不用特别指明由那个模块进行的扩展，因为此时使用 -p {tcp|upd|icmp}
+			-p tcp
+				--sport
+				--dport
+				--tcp-flags 
+			-p icmp
+				-icmp-tyep
+					0 ：echo-reply
+					8 ：echo-request
+			-p udp
+				--sport
+				--dport
+			
+		显示扩展 ：必须指明由那个模块进行的扩展，在iptables中使用-m选项可完成此功能
+	
+-j TARGET [处理办法]	
+	ACCEPT 通过
+	DROP 丢弃
+	REJECT 丢弃（不建议使用）
+	
+	iptables -t filter -A INPUT -s 172.16.0.0/16 -d 172.16.100.7 -j DROP
+
+	
+	
+命令：
+	管理规则
+		-A ：附件一条规则，在链的尾部
+		-I CHAIN [num] ：插入一条规则，插入为对应CHAIN上的第num条
+		-D CHAIN [num] ：删除指定链中的第num条规则
+		-R CHAIN [num] ：替换指定的规则
+	管理链
+		-F [CHAIN]： flush ，清空指定规则链,如果省略CHAIN，则删除对应表中的作用链
+		-P ：指定链的默认策略
+		-N ：指定一个新的空链
+		-X ：删除一个自定义的空链
+		-Z ：置零指定链中所有规则的计算器
+		-E ：重命名自定义的链
+	查看类：
+		-L ：显示指定表中的规则
+			-n ：以数字格式显示主机地址和端口号
+			-x ：显示计算器的精确值
+			-v ：显示详细信息
+			-vv ：
+			--line-number ：显示规则号码
+		
+动作（target）
+	ACCEPT ：放行
+	DROP ：丢弃
+	REJECT ：拒绝
+	SNAT ：源地址转换
+	DNAT ：目标地址转换
+	MASQUERADE ：地址伪装
+	REDIRECT ：端口重定向
+	MARK ：打标记
+	LOG	：日志
+	
+	
+	
+lsmod | grep ip  ：查看启动的模块
+
+案例：
+
+202.98.232.2 （电信办公室网，固定IP地址）
+101.249.254.249（宿舍电信网） 111.11.208.2 ssh/22  
+															111.11.208.2 httpd/80（zabbix服务器）
+1. 拒绝所有访问
+
+iptables -P INPUT DROP
+iptables -P OUTPUT DROP
+iptables -P FORWARD DROP
+
+2. 让101.249.0.0/16段地址可以ssh访问111.11.208.2这台服务器
+101.249.0.0/16   111.11.208.2 ssh/22  
+
+阿里云服务器
+iptables -t filter -A INPUT -s 115.29.225.121 -d 111.11.208.2 -p tcp --dport 22 -j ACCEPT
+iptables -t filter -A OUTPUT -s 111.11.208.2 -d 115.29.225.121 -p tcp --sport 22 -j ACCEPT
+
+宿舍电信网
+iptables -t filter -A INPUT -s 101.249.0.0/16 -d 111.11.208.2 -p tcp --dport 22 -j ACCEPT
+iptables -t filter -A OUTPUT -s 111.11.208.2 -d 101.249.0.0/16 -p tcp --sport 22 -j ACCEPT
+
+
+
+
+3. 允许101.249.0.0/16段地址可以访问111.11.208.2服务上的zabbix服务器即（httpd/80）
+iptables -t filter -I INPUT -s 101.249.0.0/16 -d 111.11.208.2 -p tcp --dport 80 -j ACCEPT
+iptables -t filter -I OUTPUT -s 111.11.208.2 -d 101.249.0.0/16 -p tcp --sport 80 -j ACCEPT
+
+
+
+4. 本机能够ping通自己
+
+ping 111.11.208.2 使用的是icmp协议 
+
+iptables -t filter -A INPUT -s 127.0.0.1 -d 127.0.0.1 -i lo -j ACCEPT
+iptables -t filter -A OUTPUT -s 127.0.0.1 -d 127.0.0.1 -o lo -j ACCEPT
+
+5. 本机ping其他服务器
+
+iptables -A OUTPUT -s 117.136.159.44 -p icmp --icmp-type 8 -j ACCEPT
+iptables -A INPUT -d 111.11.208.2 -p icmp --icmp-type 0 -j ACCEPT
+
+
+	
+6. dns 服务器 upd/53	
+iptables -P INPUT DROP
+iptables -P OUTPUT DROP
+iptables -P FORWARD DROP
+
+
+
+
+	 

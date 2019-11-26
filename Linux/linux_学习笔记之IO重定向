@@ -1,0 +1,95 @@
+I/O重定向
+
+INPUT设备
+
+OUTPUT设备
+
+系统设定
+	默认输出设备：标准输出，STDOUT ，1
+	默认输入设备：标准输入，STDIN ，0
+	标准错误输出：STDERR，2
+
+标准输入：键盘
+标准输入和错误输出：显示器
+
+
+set -C  禁止对已经存在的文件使用覆盖重定向 。 强制覆盖输出，则使用 echo 123 >| res.out
+	
+set +C 关闭上述功能
+
+
+2> 重定向错误输出
+2>> 追加方式从定向错误输出
+
+标准输出和错误输出是不通的数据流
+
+ls /var 1>var.out 2>err.out   将正确输出重定向到ls.out文件，错误输出重定向到err.out文件
+
+ls /var &> /dev/null 表示重定向标准输出或错误输出到同一个文件/dev/null
+
+
+<：输入重定向
+
+# tr 'a-z' 'A-Z' < /etc/fstab
+cat < /etc/fstab
+
+<<：Here Document   在此处生成文档
+
+向屏幕打印两行内容
+# cat <<!
+> The first line.
+> the second line.
+> !
+The first line.
+the second line.
+
+向myfile.txt文件写入两行内容
+# cat >> /tmp/myfile.txt <<!
+The first line.
+the second line.
+!
+
+管道：前一个命令的输出，作为后一个命令的输入。组合小命令完成大人物。
+
+命令1 | 命令2 | 命令3 | ...
+
+$ echo "hello,world." | tr 'a-z' 'A-Z'
+$ echo "redhat" | passwd --stdin tom
+$ cut -d : -f3 /etc/passwd | sort -n
+$ cut -d : -f1 /etc/passwd | sort | tr 'a-z' 'A-Z'
+
+
+tee 命令，从标准输入读取数据，输出到屏幕并且保存到文件
+
+$ echo "hello,world." | tee /tmp/myfile.txt
+
+
+$ cat /etc/passwd | wc -l
+74
+$ wc -l /etc/passwd | cut -d " " -f1
+74
+$ ls /usr/bin | wc -l
+$ cut -d : -f7 | /etc/passwd | sort -u
+$ file /var/log/*
+$ head -6 /etc/inittab | tail -1
+$ head -9 /etc/passwd | tail -1 | cud : -f1,7 | tee /tmp/users
+$ ls -d /etc/pa* | wc -l
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
