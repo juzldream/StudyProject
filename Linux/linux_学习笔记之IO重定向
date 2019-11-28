@@ -75,21 +75,3 @@ $ head -6 /etc/inittab | tail -1
 $ head -9 /etc/passwd | tail -1 | cud : -f1,7 | tee /tmp/users
 $ ls -d /etc/pa* | wc -l
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

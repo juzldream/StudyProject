@@ -1,0 +1,767 @@
+文本处理：cat，more，less，head，tail，cut，sort，uniq，grep，nl
+
+cut：
+	-d：指定字段分隔符，默认是空格
+	-f：指定要显示的字段
+
+sort：文本排序，默认
+	-n：数值排序
+	-r：降序
+	-t：字段分隔符
+	-k：以哪个字段为准进行排序
+	-u：去掉重复
+	-f：忽略字符大小写
+	sort -t : -k3 -n /etc/passwd #以：分割，从第3列开始排序
+
+uniq：相邻的重复行去掉
+	-d：只显示重复的行
+	-D：显示所有的重复行
+	-c：显示某一行重复的次数
+
+文本统计：wc （word count）
+	-l：line
+	-L, --max-line-length  ：最长一行包含了多少个字符
+	-w：
+	-c：
+
+	[xzdnsaipso@DQAS ~]$ wc /etc/passwd
+    74  117 3671 /etc/passwd     # 行 单词数 字节数
+
+tr：字符处理，转换或删除字符
+	tr 'a-z' 'A-Z' < /etc/passwd 把passwd文件小写字母换成大小字母
+
+	-d 删除出现在字符集中的所有字符
+	cat /etc/passwd | tr -d 'root'  
+
+
+
+-------------------------------------------------------------------
+
+pstree 
+
+
+bash：
+	1. 命令历史
+	2. 管道、重定向
+	3. 命令别名
+	4. 命令行编辑
+	5. 命令行展开
+	6. 文件名通配
+	7. 变量
+	8. 编程
+
+
+1. 命令行编辑
+	光标跳转：
+		Ctrl+a
+		Ctrl+e
+		Ctrl+u ：删除光标至命令行首内容
+		Ctrl+k
+		Ctrl+l 
+		Ctrl+ 左右箭头
+		clear
+
+2. 命令历史
+	上下箭头
+	history
+		-c ：清空命令历史
+		-d n：删除第5个命令
+			history -d 5
+			history -d 5 10 从第5个命令往后删除10个
+		-w ：保存命令历史之文件中
+		echo $HISTSIZE 命令历史大小
+		!n ：执行命令历史中的第n条命令
+		!-n :执行命令历史中的倒数第n行
+		!! : 执行上一条命令  Esc .
+		！string：
+
+3. 命令补全、路径补全
+
+4. 命令别名(经常使用的命令可以定义别名)
+	type alias #ailas是个内建命令
+	alias cls='clear'
+	cdnet='/etc/sysconfig/network-scripts'
+
+	unalias cls #删除cls命令别名
+
+
+5. 命令替换 $(COMMAND) `COMMAND`
+
+	echo "The current directory is $(pwd)."   echo "The current directory is `pwd`."  
+	touch ./file-$(date +%F-%H-%M-%S)         touch ./file-`date +%F-%H-%M-%S`
+
+
+6. 文件名通配 globbing 
+
+	*
+	？
+	[]
+
+
+bash支持的引号
+`` :命令替换
+"" :弱引用，可以实现变量替换
+'' :强引用，不完成变量替换
+
+http://mageedu.blog.51cto.com
+
+
+bash变量
+
+	环境变量
+	本地变量（局部变量）
+	位置变量
+	特殊变量
+
+本地变量：作用域整个bash进程
+
+局部变量：作用域为当前代码段
+
+环境变量：作用域为当前shell进程及其子进程
+
+位置变量：
+	$1,$2, ...
+	$0   ： 获取脚本名称
+	shift：轮替
+
+特殊变量：
+	$?：上一个命令执行结果状态（0-255）
+		0：正确执行
+		1-255：错误执行 ，1,2,127 系统预留
+	$#：参数的个数
+	$*：参数列表
+	$@：参数列表
+
+引用变量：${VARNAME} 括号有时可省略
+
+输出重定向
+
+>
+>>
+2>
+2>>
+&>
+
+id alipms &> /dev/null
+echo $?
+
+
+/dev  下面放的都是设备
+/dev/null 软件设备，bit bucket ，数据黑洞
+
+
+撤销变量：unset 
+
+查看当前shell中的变量：set
+查看当前shell中的环境变量：printenv 、env 、export 
+
+export PATH=$PATH:/usr/local/zabbix/sbin 
+echo $PATH 
+
+zoon=pig
+zoon=$zoon:sheep
+
+-------------------------------------------------------------------
+
+first.sh
+
+shebang : 魔数
+#!/bin/bash 
+
+cat /etc/fstab
+ls /var
+
+
+问题：
+1. 添加5个用户，不显示命令执行结果
+
+useradd user1 ; echo user1 | passwd --stdin user1 &> /dev/null
+echo "Add useer1 successfully."
+
+条件判断
+
+条件测试类型
+	整数测试
+	字符测试
+	文件测试
+
+条件测试表达式
+	[ expression ]
+	[[ expression ]] 
+	test expression
+
+整数比较
+	-eq：测试两个整数是否相等
+	-ne：测试两个整数是否不等
+	-gt：测试一个数是否大于另一个数
+	-lt：测试一个数是否小于另一个数
+	-ge：大于或等于
+	-le：小于或等于
+
+字符测试
+
+	==：测试是否相等，相等为真，不等为假
+	!=：测试是否不等，不等为真，相等为假
+	>
+	<
+	-n：测试指定字符串是否为空，为空则真，不空则假
+	-s：测试指定字符串是否不空，不空为真，空则为假
+
+问题：判断一用户用户名和组名是否一致？
+
+#!/bin/bash
+#
+if ! id $1 &>/dev/null; then
+  echo "No such user."
+  exit 10
+fi
+
+if [ $1 == `id -n -g $1` ]; then
+  echo "Yiyang"
+else
+  echo "Bu Yiyang"
+fi
+
+
+
+语句间的逻辑关系
+	逻辑与 &&
+	逻辑或 || 	
+	如果用户alipms存在，就打印"Hello ,alipms."
+	id alipms &> /dev/null && echo "Hello ,alipms."
+	如果用户user6不存在，就添加用户user6
+	id user6 &> /dev/null || useradd user6
+
+	[ `wc -l /etc/inittab | cut -d ' ' -f1` -gt 30 ] && echo "/etc/inittab is large file." || echo "/etc/inittab is samill."
+
+	id alipms && echo "user6 exists." || useradd user6
+
+	second.sh
+
+	#!/bin/bash
+	LINES=`wc -l /etc/inittab`
+	#echo $LINES
+
+	FINLINES=`echo $LINES | cut -d' ' -f1`
+	#echo $FINLINES
+
+	[ $FINLINES -gt 100 ] && echo "/etc/inittab is a big file." || echo "/etc/inittab is a small file."
+    
+	
+
+问题：
+1. 添加3个用户user1，user2，user3 显示系统共有多少用户？
+
+adduser.sh
+
+#!/bin/bash
+! id user1 &> /dev/null && useradd user1 && echo "user1" | passwd --stdin user1 &> /dev/null || echo "user1 exists."
+! id user2 &> /dev/null	&& useradd user2 && echo "user2" | passwd --stdin user2	&> /dev/null ||	echo "user2 exists."
+! id user3 &> /dev/null	&& useradd user3 && echo "user3" | passwd --stdin user3	&> /dev/null ||	echo "user3 exists."
+
+USERS=`wc -l /etc/passwd | cut -d: -f1`
+echo "$USERS users."
+
+2. 如果用户UID为0，就显示为管理员，否则就显示为普通用户
+
+third.sh
+
+#!/bin/bash
+#
+NAME=root
+USERID=`id -u $NAME`
+[ $USERID -eq 0 ] && echo "Admin" || echo "Common user."
+
+usertest.sh
+
+#!/bin/bash
+#
+NAME=user17
+
+if id $NAME &> /dev/null; then
+  echo "$NAME exists."
+else
+  useradd $NAME
+  echo $NAME | passwd --stdin $NAME &> /dev/null
+  echo "Add $NAME finished."
+fi
+
+4. 
+如果 UID为0；那么
+	显示为管理员
+否则
+	显示为普通用户
+
+
+[ `id -u root` -eq 0 ] && echo "Admin" || echo "Common user."
+
+
+
+NAME=user16
+
+
+if [ `id -u $NAME` -eq 0 ] ;then
+	echo "Admin."
+else
+	echo "Common user."
+fi
+
+
+5. 默认shell用户多少个？
+#!/bin/bash
+#
+grep "\<bash$" /etc/passwd &> /dev/null
+RETVAL=$?
+
+if [ $RETVAL -eq 0 ]; then
+  USERS=`grep "\<bash$" /etc/passwd | wc -l`
+  echo "The shells of $USERS users is bash." 
+else
+  echo "No such user."
+fi 
+
+6. 
+#!/bin/bash
+#
+grep "\<bash$" /etc/passwd &> /dev/null
+RETVAL=$?
+
+if [ $RETVAL -eq 0 ]; then
+  AUSER=`grep "\<bash$" /etc/passwd | head -1 | cut -d: -f1`
+  echo "$AUSER is one of such users."
+else
+  echo "No such user."
+fi 
+
+7.
+USERNAME=user1
+USERID=`id -u $USERNAME`
+GROUPID=`id -g $USERNAME`
+
+if [ USERID -eq GROUPID ];then
+  echo "Good guy."
+ else
+  echo "Bad guy."
+fi
+
+
+
+shell 中如何进行算术运算
+A=3
+B=6
+
+1. let C=$A+$B
+
+2. C=$[$A+$B]
+
+3. C=$(($A+$B))
+
+4. C=`expr $A + $B`
+
+
+exit ：退出脚本，定义脚本退出状态码。如果脚本没有明确定义退出状态码，那么，最好执行的一条命令的退出码即为脚本的退出状态码
+
+#!/bin/bash
+
+if ! grep "^alipms\>" /etc/passwd &> /dev/null
+then
+    echo "No such user : alipms."
+    exit 1
+fi
+useradd alipms;echo 123456 | passwd --stdin alipms
+
+
+文件测试：
+	-e FILE ：测试文件是否存在
+	-f FILE ：测试文件是否是普通文件
+	-d FILE ：测试指定路径是否为目录
+	-r FILE ：测试当前用户对指定文件是否有读权限
+	-w FILE ：测试当前用户对指定文件是否有写权限
+	-x FILE ：测试当前用户对指定文件是否有执行权限
+
+
+
+#!/bin/bahs
+
+FILE=/etc/fstab
+
+if [ ! -e $FILE ]
+then
+        echo "$FILE file does not exist."
+        exit 1
+fi
+if grep "^$" $FILE & > /dev/null
+then
+        echo "Total blank lines : `grep "^$" $FILE | wc -l`. "
+else
+        echo "No blank line."
+fi
+
+
+
+
+#!/bin/bash
+
+w=`grep "alipms" /etc/shadow | cut -d : -f 6`
+s=`date +%s`
+t=`expr $s/86400`
+l=`grep "alipms" /etc/shadow | cut -d : -f 5`
+n=`grep "alipms" /etc/shadow | cut -d : -f 3`
+sy=$[$l-$[$t-$n]]
+
+if [ $sy -lt $w ]
+then
+        echo "warning"
+else
+        echo "OK"
+fi
+
+
+bash -n 脚本
+bash -x 脚本 ： 单步执行
+
+
+#!/bin/bash
+#
+FILE=/etc/inittabb
+
+if [ -e $FILE ]; then
+  echo "OK"
+else
+  echo "No such file."
+fi
+
+
+#!/bin/bash
+#
+FILE=/etc/rc.dddd
+
+if [ ! -e $FILE ]; then
+  echo "No such file."
+  exit
+fi
+
+if [ -f $FILE ]; then
+  echo "Common file."
+elif [ -d $FILE ]; then
+  echo "Directory."
+else
+  echo "Unknown."
+fi
+
+#!/bin/bash
+#
+if [ $# -lt 1 ]; then
+  echo "Usage: ./$0 ARG1 [ARG2 ...]"
+  exit 7
+fi
+
+if [ -e $1 ]; then
+  echo "OK."
+else
+  echo "No such file."
+fi
+
+#!/bin/bash
+#
+echo $1
+shift 2
+echo $1
+shift 2
+echo $1
+
+
+循环
+
+for
+while
+until
+
+for I in {1..100}
+do
+	echo $I
+done
+
+for I in {1..100};do echo $I;done
+
+列表生成
+{1..100}
+seq 100 
+seq 1 2 10
+
+for I in `seq 100`
+do
+	echo $I
+done
+
+declare -i  ：整数
+		-x  ：环境变量
+
+
+问题：向/etc/passwd 里面的每一个用户问声好？
+for i in `cat /etc/passwd | awk -F : '{print $1}'`;do echo hello $i ; done
+
+面向过程
+	控制结果
+		顺序结构
+		选择结构
+			if
+			case
+		循环结构
+			for
+			while
+			until
+
+#!/bin/bash
+#
+case $1 in
+[0-9])
+  echo "A digit." ;;
+[a-z])
+  echo "Lower" ;;
+[A-Z])
+  echo "Upper" ;;
+*)
+  echo "Special character." ;;
+esac
+
+
+#!/bin/bash
+#
+case $1 in
+'start')
+  echo "start server ..." ;;
+'stop')
+  echo "stop server ..." ;;
+'restart')
+  echo "Restarting server ..." ;;
+'status')
+  echo "Running..." ;;
+*)
+  echo "`basename $0` {start|stop|restart|status}" ;;
+esac
+
+
+#!/bin/bash
+#
+DEBUG=0
+ADD=0
+DEL=0
+
+for I in `seq 0 $#`; do
+  if [ $# -gt 0 ]; then
+    case $1 in
+      -v|--verbose)
+        DEBUG=1
+        shift ;;
+      -h|--help)
+        echo "Usage: `basename $0` --add USER_LIST --del USER_LIST -v|--verbose -h|--help"
+        exit 0
+        ;;
+      --add)
+        ADD=1
+        ADDUSERS=$2
+        shift 2
+        ;;
+      --del)
+        DEL=1
+        DELUSERS=$2
+        shift 2
+        ;;
+      *)
+        echo "Usage: `basename $0` --add USER_LIST --del USER_LIST -v|--verbose -h|--help"
+        exit 7
+        ;;
+    esac
+  fi
+done
+
+if [ $ADD -eq 1 ]; then
+  for USER in `echo $ADDUSERS | sed 's@,@ @g'`; do
+    if id $USER &> /dev/null; then
+      [ $DEBUG -eq 1 ] && echo "$USER exists."
+    else
+      useradd $USER
+      [ $DEBUG -eq 1 ] && echo "Add user $USER finished."
+    fi
+  done
+fi
+
+if [ $DEL -eq 1 ]; then
+  for USER in `echo $DELUSERS | sed 's@,@ @g'`; do
+    if id $USER &> /dev/null; then
+      userdel -r $USER
+      [ $DEBUG -eq 1 ] && echo "Delete $USER finished."
+    else
+      [ $DEBUG -eq 1 ] && echo "$USER not exist."
+    fi
+  done
+fi
+
+
+问题：通过ping命令测试 192.168.0.151到192.168.0.254 之间的所有主机是否在线，如果在线就显示“ip is up.” ；如果不在线就显示“ip is down” ； 分别是用while 、until、for实现？
+
+
+ping -c 1 -W 1 192.168.0.254 &> /etc/null && echo "192.168.0.254 is up." || echo "192.168.0.254 is down."
+
+#!/bin/bash
+
+Ping(){
+  if ping -c 1 -W 1 $1 &> /dev/null
+    then
+      return 0
+  else
+      return 1
+  fi
+}
+
+for i in {1..254}
+do
+  if Ping 1.1.1.$i
+  then
+    echo 1.1.1.$i is up.
+  else
+    echo 1.1.1.$i is down.
+  fi
+done
+
+
+-------------------------------------------------------------------
+
+
+函数： 功能， function 
+
+结构化、代码重用
+
+问题：定义一个菜单函数？
+
+#!/bin/bash
+
+showmenu(){
+cat << ! 
+---------------------------------  
+|  d|D)show disk usages.        | 
+|  m|M)show memory usages.      |
+|  s|S)show swap usages.        |
+|  q|Q)quit.                    |
+---------------------------------
+!
+}
+
+showmenu
+
+
+return 0 
+
+字符串操作
+
+${#staring}  得到staring穿长度
+
+/etc/rc.d/rc.sysinit 
+
+# a=3
+# echo ${a:-30}
+# echo ${a:+30}
+
+# b='hello world'
+# echo ${b:2:3}
+
+
+命令 ：mktemp 创建临时文件或者目录
+
+#mktemp /tmp/file.XX
+#mktemp /tmp/file.XXXX
+
+#mktemp -d /tmp/dir.xxx   创建临时目录
+
+
+信号：进程间的通信方式。脚本中，能实现信号捕捉，但9和15无法捕捉
+
+kill -9 PID
+	9 : kill
+	1 : 
+	2
+	15
+
+命令：trap 信号捕捉
+
+
+任务计划 
+
+1. 在未来某个时间点执行一次某任务
+
+	at
+	batch
+
+2. 周期性地执行某认为
+	cron服务自身是一个不间断运行的服务
+		crontab -e|-l
+
+
+
+
+
+
+
+
+
+-------------------------------------------------------------------
+
+数组
+
+数组赋值方式，以下3种方式都可以：
+
+arr[0]=tom
+arr[1]=jerry
+arr[3]=vendy
+
+
+
+arr=(tom jerry vendy)
+
+arr=([0]=tom [1]=jerry [3]=vendy)
+
+
+问题：随机从同学中选择一位同学出来？
+
+
+stdus=('LiMing' 'zhangsan' 'wangwu' 'xijie')
+
+for i in {1..3}
+do
+	index=${$RANDOM%4}
+	echo ${stdus[$index]}
+done
+
+判断文件内容是否为空？
+
+getopts 命令
+
+OPTARG
+OPTIND
+
+
+
+
+问题：写一个脚本，自动创建shell脚本，把标题写好？
+
+#/bin/bash
+# Bewrite:自动创建shell脚本。
+# Date:2019/10/19
+# Author:zhourui
+# Version:0.0.1
+# Usage:
+
+
+cat > $1 << EOF
+#/bin/bash
+# Bewrite:
+# Date:`date "+%F %H:%M"`
+# Author:juzldream
+# Version:0.0.1
+# Usage:`basename $1`
+
+
+EOF
+vim +9 $1
+
