@@ -1,0 +1,290 @@
+Linux系统启动流程
+
+PC：OS(Linux)
+
+POST(加电自检) --> BIOS(Boot Sequence)-->MBR(bootloader,446)-->Kernel-->(ROOTFS)/sbin/init(/etc/inittab)
+
+内核设计风格
+
+RedHat，SUSE
+核心：动态加载内核模块
+内核：/lib/modules/2.6.32-431.el6.x86_64
+	[root@DQAS kernel]# pwd
+	/lib/modules/2.6.32-431.el6.x86_64/kernel
+	[root@DQAS kernel]# ls
+	arch                crypto        drivers  fs      kernel           lib  mm      net  sound  
+    跟平台相关，驱动CPU  加密解密相关的  驱动    文件系统  内核自身加载模块  库   内存管理 网络  声卡
+
+
+内核自身：/boot/vmlinuz-2.6.32-431.el6.x86_64
+
+
+	单内核： Linux （LWP 轻量级线程）
+		核心：ko（kernel object）
+		so()
+
+	微内核： Windows，Solaris （线程）
+
+
+启动的服务不同的运行级别(/etc/inittab)：0~6
+	0：halt
+	1：single user mode 直接以管理员身份切入，可以修改root密码 。single ，1，s，S
+	2：multi user mode ，no NFS 多用户模式，不启动nfs功能
+	3：multi user mode ，text   多用户文本模式，不启用图形界面
+	4：reserved 保留级别，未定义
+	5：multi user mode，graphic mode 多用户文本模式，启动图形界面
+	6：reboot
+
+type cd  查看命令是否是内部命令
+
+ldd /PATH/TO/BINARY_FILE  ：显示二进制依赖的文件库
+
+chrood 改变跟目录，锁定特定目录
+
+	mkdir -l testrootdir/bin
+	cp /bin/bash testrootdir/bin/
+	cp /bin/ls testrootdir/bin/
+	cp -r /lib64 testrootdir/
+	chroot testrootdir/
+
+
+详解启动过程
+
+bootloader(MBR)
+	LILO：LInux LOader
+	GRUB：GRand Unified Bootloader
+		Stage1：MBR
+		Stage1.5
+		Stage2：/boot/grub/stage2/
+
+		rpm -q grub  查看grub版本
+
+	/etc/grub.conf 文件说明：
+	device (hd0) HD(1,800,64000,ce003859-f7bd-46fb-8cb9-3eaffd322b21)
+	default=0  												#设定默认启动的title变化，从0开始
+	timeout=5  												#等待用户选择超时时长，单位是秒
+	splashimage=(hd0,1)/grub/splash.xpm.gz grub             #背景图片
+	hiddenmenu  											#隐藏菜单
+	password  --md5 $1$BgEGg0$SjyYw7yCJHHa3PPU8REpI.        #
+	title Red Hat Enterprise Linux Server (2.6.32-754.23.1.el6.x86_64) #内核标题，或操作系统名称，字符串，可以自由修改
+	        root (hd0,1)  									#内核文件所在的设备，对grub而言，所有类型硬盘一律hd，hd0 表示第几个磁盘，最后的0表示对应的磁盘分区
+	        kernel /vmlinuz-2.6.32-754.23.1.el6.x86_64 ro root=UUID=09103299-e600-4a68-87c2-c5ddf6c53055 rd_NO_LUKS  
+	        					
+	        												#kernel文件路径，传递给内核的参数 cat /proc/cmdline 
+	        KEYBOARDTYPE=pc KEYTABLE=us rd_NO_MD crashkernel=auto LANG=zh_CN.UTF-8 rd_NO_LVM rd_NO_DM rhgb quiet SYSFONT=latarcyrheb-sun16
+	        initrd /initramfs-2.6.32-754.23.1.el6.x86_64.img #ramdisk文件路径
+	        password  --md5 $1$BgEGg0$SjyYw7yCJHHa3PPU8REpI.        #
+	title Red Hat Enterprise Linux (2.6.32-431.el6.x86_64)
+	        root (hd0,1)
+	        kernel /vmlinuz-2.6.32-431.el6.x86_64 ro root=UUID=09103299-e600-4a68-87c2-c5ddf6c53055 rd_NO_LUKS  KEYBOARDTYPE=pc KEYTABLE=us rd_NO_MD crashkernel=auto LANG=zh_CN.UTF-8 rd_NO_LVM rd_NO_DM rhgb quiet
+	        initrd /initramfs-2.6.32-431.el6.x86_64.img
+
+	yum install gimp  linux 下的 ps工具
+	gimp &
+	grub-md5-crypt  md5 加密工具
+	who -r              查看系统运行级别
+	runlevel            查看系统运行级别
+	uname -r -a         查看系统内核
+
+
+安装修复 grub stage1 文件
+
+#grub
+grub>root (hd0,0)
+grub>setup (hd0)
+grub>quit
+
+安装grub第二种方式
+
+grub-install --root-directory=/     /dev/hda
+
+grub-install --root-directory=/mnt  /dev/hda
+
+
+Kernel 初始化的过程
+
+1. 硬件探测
+2. 驱动初始化
+3. 以只读方式挂载根文件系统(rootfs)
+4. 装载第一个进程init(PID :1)
+
+/etc/rc.d/rc.sysinit 完成的任务，没事看看这个脚本
+
+1. 激活udev和selinux
+2. 根据/etc/sysctl.conf文件来设定内核参数
+3. 设定时钟时间
+4. 装载键盘映射
+5. 启用交换分区
+6. 设置主机名
+7. 根文件系统检测，并以读写方式重新挂载
+8. 激活RAID和LVM设备
+9. 启用磁盘配额
+10. 根据/etc/fstab 检测并挂载其他文件系统
+11. 清理过期的锁和PID文件
+
+
+/etc/rc.d/rc  没事看看这个脚本
+
+
+内核功能
+	文件系统
+	进程管理
+	内存管理
+	安全功能
+	驱动程序
+
+服务类型脚本
+	sysV /etc/rc.d/init.d
+		start|stop|restart|status
+		reload|configtest
+
+chkconfig --list 查看所有独立守护服务的启动设定
+
+chkconfig --list mysql
+
+chkconfig --add service  添加到守护服务
+
+chkconfig --del service  删除守护服务器
+
+chkconfig --leval 24 service off 指定24级别下关闭service服务
+
+/etc/rc.d/rc.local  系统最好启动的一个服务
+
+
+https://www.kernel.org/  查看内核版本号
+
+
+用户控件访问、监控内核的方式
+
+/proc  此目录里的文件可读写
+/sys   伪文件系统，某些文件可读
+
+/proc/sys/kernel/hostname 
+
+
+设定内核参数数值的方法（立即生效，再次开机无效）
+# echo testplus > /proc/sys/kernel/hostname 修改主机名
+# sysctl -w kernel.hostname="testplus" 
+
+sysctl -p 让内核读参数，立即生效
+sysctl -a 显示所有内核参数及其值
+
+永久生效，但不能立即生效 ： /etc/sysctl.conf
+
+
+内核模块管理命令
+
+lsmod 查看内核模块
+
+modprobe 装载模块
+	-r 卸载模块
+
+modinfo 查看模块信息
+
+insmod 装载模块
+rmmod 移除模块
+
+如何手动编译内核
+yum install "development Tools" "development Libraries"
+
+make gconfig 
+make kconfig 
+
+make menuconfig 
+
+make install 
+
+make clean 二次编译清理
+
+
+
+yum install screen 
+
+screen 新建屏幕
+	Ctrl+a d 拆除屏幕
+	exit 退出屏幕
+screen ls 列出已经建立的屏幕
+
+screen -r ID 还原为ID屏幕
+
+mkinitrd 
+
+mkinitrd /boot/initrd-`uname -r`.img `uname -r`
+
+zcat /boot/initrd-`uname -r` | cpio -id
+
+
+find . | cpio -H newc --quiet -o | gzip -9 >/mnt/boot/initrd.gz
+
+/boot/
+.
+├──grub
+├──initrd
+├──grub.conf
+
+/sysroot/
+.
+├──bin
+├──boot
+├──dev
+|   --rc.d
+├──home
+├──lib
+├──proc
+├──root
+├──sbin
+├──sys
+├──tmp
+├──usr
+├  --bin
+├  --sbin
+├──var
+   -- log
+
+
+
+
+copy 常用命令及依赖库到chroot目录脚本
+
+#!/bin/bash
+#
+DEST=/mnt/sysroot
+libcp() {
+  LIBPATH=${1%/*}
+  [ ! -d $DEST$LIBPATH ] && mkdir -p $DEST$LIBPATH
+  [ ! -e $DEST${1} ] && cp $1 $DEST$LIBPATH && echo "copy lib $1 finished."
+}
+
+bincp() {
+  CMDPATH=${1%/*}
+  [ ! -d $DEST$CMDPATH ] && mkdir -p $DEST$CMDPATH
+  [ ! -e $DEST${1} ] && cp $1 $DEST$CMDPATH
+
+  for LIB in  `ldd $1 | grep -o "/.*lib\(64\)\{0,1\}/[^[:space:]]\{1,\}"`; do
+    libcp $LIB
+  done
+}
+
+read -p "Your command: " CMD
+until [ $CMD == 'q' ]; do
+   ! which $CMD && echo "Wrong command" && read -p "Input again:" CMD && continue
+  COMMAND=` which $CMD | grep -v "^alias" | grep -o "[^[:space:]]\{1,\}"`
+  bincp $COMMAND
+  echo "copy $COMMAND finished."
+  read -p "Continue: " CMD
+done
+
+
+
+
+查看本机硬件设备信息
+
+1. 查看CPU信息：cat /proc/cpuinfo
+2. lsusb
+3. lspci
+4. 查看硬件抽象层 hal （Hardware Abstract Layer）
+
+
+如何编译busybox
+
+4.9+44.5
