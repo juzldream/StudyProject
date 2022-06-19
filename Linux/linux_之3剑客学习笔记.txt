@@ -12,6 +12,7 @@ grep [OPTIONS] PATTERN [FILE...]
 		operator:x:11:0:operator:/root:/sbin/nologin
 	-v ：显示没有被模式匹配到的文本行
 	-o ：只显示被模式匹配到的字符串
+	-q ：静默模式，不输出显示结果，shell变成使用判断结果用的上。 $? 
 		[aiobs@CMNET-AIOBS2 ~]$ grep --colour -o root /etc/passwd
 		root
 		root
