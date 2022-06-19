@@ -44,7 +44,7 @@ egrep "3306|47808" /etc/services --colour                       # | 或匹配多
 
 元字符
 
-.
+. 匹配任意单歌字符 
 []
 [^]
 [:digit:] [:lower:] [:upper:] [:punct:] [:space:] [:alpha:] [:alnum:]
