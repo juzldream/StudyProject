@@ -1,0 +1,104 @@
+Linux Service and Security
+
+OpenSSL（ssl tls）
+	libencrypt库
+	libssl库
+	openssl多用途命令行工具
+
+ssl （secure sockets layer）安全的套接字层
+tls：transport layer security
+http + ssl = https
+
+安全的目标
+	保密性
+	完整性
+	可用性
+
+攻击类型
+	威胁保密性攻击：窃听、通信量分析
+	威胁完整性攻击：更改、伪装、重放
+	威胁可用性攻击：拒绝服务
+
+技术：加密和解密、安全服务（认证机制、访问控制机制）
+
+md5:message digest 5 128bits
+sha1:secure hash algorlthm1，160bits
+sha224、sha256、sha384、sha512
+
+PKI：Public Key Infrastructure 公钥基础设施
+
+
+	签证机构：CA
+	注册机构：RA
+	证书吊销列表：CRL
+	证书存取库
+
+X.509 是密码学里公钥证书的格式标准
+	版本号
+	序列号
+	签名算法
+	发行者名称
+	有效期限
+	主体名称
+	主体公钥
+	发行者的唯一标识
+	主体的唯一标识
+	扩展
+	发行者的签名
+
+openssl version
+
+标准命令
+消息摘要命令（dgst子命令）
+加密命令（enc子命令）
+
+加密fstab文件
+openssl enc -e -des3 -a -salt -in fstab -out fstab.pswd 
+解密fstab文件
+openssl enc -d -des3 -a -salt -out fstab.pswd -in fstab
+
+dgst命令
+openssl dgst -md5 fstab
+MD5(fstab)= d38333e3b7fb23bddf26fb92f5db9354
+md5sum fstab
+d38333e3b7fb23bddf26fb92f5db9354  fstab
+
+生成随机数
+openssl rand -base64 6
+openssl rand -hex 4
+
+生成密钥
+(umask 077; openssl genrsa -out ./mykey.private 2048)
+提取公钥
+openssl rsa -in mykey.private -pubout
+
+
+配置文件：/etc/pki/tls/openssl.cnf
+生成私钥
+(umask 077; openssl genrsa -out /etc/pki/CA/private/cakey.pem 4096)
+生成自签证书
+openssl req -new -x509 -key /etc/pki/CA/private/cakey.pem -out /etc/pki/CA/cacert.pem -days 3650
+为CA提供所需要的目录及文件
+mkdir -pv /etc/pki/{certs,crl,newcerts,private}
+touch /etc/pki/CA/{serial,index.txt}
+echo 01 > /etc/pki/CA/serial 
+
+cd /etc/httpd/conf
+
+mkdir ssl;cd ssl
+用到证书的主机生成私钥
+(umask 077; openssl genrsa -out httpd.key 2048)
+生成证书签署请求
+openssl req -new -key httpd.key -out httpd.csr -days 365
+将请求发送给CA主机
+scp root@IP:httpd.csr
+在CA主机上签署证书
+openssl ca -in httpd.csr -out /etc/pki/CA/certs/httpd.crt -days 365
+
+
+参考书：
+https://www.feistyduck.com/library/openssl-cookbook/online/
+https://www.openssl.net.cn/
+OpenSSH（ssh）
+
+openssl version
