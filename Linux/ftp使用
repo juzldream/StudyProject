@@ -1,0 +1,82 @@
+ftp file tranfer protocol 文件传输协议
+vsftp（Very Secure FTP daemon）
+
+ftp Filezilla cuteFTP FlashFXP
+
+yum info vsftpd 
+
+rpm ql vsftpd
+
+yum install vsftpd
+
+systemctl status vsftpd.service
+
+grep "^ftp" /etc/passwd
+
+
+
+主程序：/usr/sbin/vsftpd
+主配置文件：/etc/vsftpd/vsftpd.conf
+数据目录：/var/ftp
+systemd unit file：/usr/lib/systemd/system/vsftpd.service
+
+finger fedora
+
+用户类别：
+	匿名用户：anonymous 
+	系统用户：/etc/vsftpd/ftpusers PAM（/etc/pam.d/vsftpd）
+	虚拟用户：账户可存入文件、mysql数据库中
+man vsftpd.conf
+
+
+匿名用户
+anonymous_enable=YES 是否启用匿名用户账户
+anon_upload_enable=YES 是否启用你们用户上传文件
+anon_mkdir_write_enable=YES 是否启用匿名用户创建文件
+anon_other_enable=YES 是否启用匿名用户删除文件
+
+
+
+
+系统用户
+	local_enable=YES
+	write_enable=YES
+	local_umask=022
+
+	辅助配置文件/etc/vsftpd/ftpusers列在此文件的用户禁止使用ftp
+
+
+tcpdump -i eno16777736 -nn -XX tcp port 21 
+yum install lftp ftp
+lftp -u ftp 127.0.0.1
+
+cat /etc/pam.d/vsftpd 
+#%PAM-1.0
+session    optional     pam_keyinit.so    force revoke
+auth       required	pam_listfile.so item=user sense=deny file=/etc/vsftpd/ftpusers onerr=succeed
+
+
+for i in {1..5}; do useradd user$i; echo user$i | passwd --stdin user$i; done
+
+
+禁止文件列表里的用户只能在自己的家目录，需要事先chmod a-x /home/user1
+chroot_list_enable=YES
+chroot_list_file=/etc/vsftpd/chroot_list
+
+启用开登陆vsftpd用户列表/etc/vsftpd/user_list
+userlist_enable=YES
+userlist_deny=NO （NO：白名单，YES：黑名单）
+
+传输日志
+xferlog_enable=YES
+xferlog_file=/var/log/xferlog
+xferlog_std_format=YES
+
+
+上传下载速率
+
+anon_max_rate=0
+local_max_rate=0
+
+最大并发连接数
+max_clients=2000
