@@ -1,9 +1,9 @@
 《男人这东西》渡边淳一
 单身   狗
-single dog
-AF_INET：Address Family，IPv4
-AF_INET6: IPv6
-AF_UNIX：Unix_SOCK 用于统一主机上的不同进程间基于socker套接字通信使用的一种地址
+    single dog
+    AF_INET：Address Family，IPv4
+    AF_INET6: IPv6
+    AF_UNIX：Unix_SOCK 用于统一主机上的不同进程间基于socker套接字通信使用的一种地址
 TCP协议的特点：
     建立连接：三次握手
     将数据打包成段：检验和（CRC32）
@@ -20,7 +20,9 @@ HTTP: HyperText Transfer Protocol: 超文本传输协议
 Web: 
 	http/0.9: 仅纯文本(超链接)， ASCII，
 	HTML：HyperText Mark Language
+		<meta charset=utf-8>
 		<h2>Title</h2>
+		<a href="https://space.bilibili.com/477720731?spm_id_from=333.1007.0.0">破站～～</a>
 		
 Browser: 客户端
 
@@ -34,14 +36,14 @@ URL：Uniform Resource Locator
 
 protocol://HOST:port/path/to/file
 
-http://www.magedu.com/download/linux.tar.gz
+http://www.juzldream.me/download/racher.tar.gz
 
-web资源：http://www.magedu.com/logo.gif
+web资源：http://www.juzldream.me/logo.gif
 	多个资源很可能被整合为一个html文档
 	
 web对象：
 
-HTTP方法：
+HTTP方法(method)：
 	GET
 	
 http/1.0: PUT, POST, DELETE, HEAD
@@ -76,7 +78,7 @@ index.html:
 
 缓存：
 
-URL：http://www.magedu.com/2.html
+URL：http://www.juzldream.me/2.html
 
 
 HTTP报文：请求报文，响应报文
@@ -142,12 +144,6 @@ http/1.1：
 
 
 www.netcraft.com
-
-
-
-
-
-
 
 
 Web服务器处理并发连接请求的架构方式
