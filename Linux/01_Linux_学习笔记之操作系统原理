@@ -1,11 +1,12 @@
 1.计算机体系结构
-
-	运算器
-	控制器
-	存储器 ，内存，编址
-	输出设备
-	输入设备
-
+	
+	运算器、控制器(CPU) Intel AMD 苹果
+	存储器 ，内存，编址 RAM(Random Access Memory)
+	输出设备(Output)，输出加工后的数据 显示器
+	输入设备、(Intput) 键盘 触摸屏
+	multi ['mʌlti]  tasks 多任务
+	www.top500.org
+  纠结是因为想脚踏两只船
 2.硬件架构:
 
 	ARM
@@ -40,7 +41,7 @@
 	安全机制
 
 5.GNU：GNU is Not Unix 。GNU计划，又称革奴计划，是由Richard Stallman在1983年9月27日公开发起的。它的目标是创建一套完全自由的操作系统。
-6.GPL：General Public License
+6.GPL：General Public License  free 自由
 
 
 Emacs:文本编辑器
