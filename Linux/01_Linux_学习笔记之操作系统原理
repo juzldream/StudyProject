@@ -1,23 +1,22 @@
 1.计算机体系结构
-	
 	运算器、控制器(CPU) Intel AMD 苹果
 	存储器 ，内存，编址 RAM(Random Access Memory)
 	输出设备(Output)，输出加工后的数据 显示器
 	输入设备、(Intput) 键盘 触摸屏
 	multi ['mʌlti]  tasks 多任务
 	www.top500.org
-  纠结是因为想脚踏两只船
-2.硬件架构:
-
+  	纠结是因为想脚踏两只船
+2.硬件架构
 	ARM
 	x86
 	x64
 	安腾
-	alpha
-	UltraSparc
-	Power
+	alpha hp-ux
+	UltraSparc solaris
+	Power aix
 	M68000,M68K
 	PowerPC
+	MIPS
 
 3.OS[Operation System]：
 
@@ -42,7 +41,8 @@
 
 5.GNU：GNU is Not Unix 。GNU计划，又称革奴计划，是由Richard Stallman在1983年9月27日公开发起的。它的目标是创建一套完全自由的操作系统。
 6.GPL：General Public License  free 自由
-
+	自由含义：自由学习和修改；自用使用；自由分发；自由创建衍生版
+copyright copylieft
 
 Emacs:文本编辑器
 gcc：GNU C Complier
@@ -55,6 +55,10 @@ SLS
 Debian ,dpt
 SUSE  ,rpm
 Ubuntu:Mint
+Knopix
+Slackware 
+OpenSUSE
+Fedora 
 
 发行商：release
 
@@ -62,10 +66,14 @@ CentOS：Community ENTerprise OS
 
 Fedora:
 
+major minor release 
+GPL、BSD、Apache 、MIT
+Android
+
 7.Linux的基本原理：
 	1）由目的单一的小程序组成：组合小程序完成复杂任务；
-	2）一切接文件：
-	3）尽量避免捕获用户接口：
+	2）一切接文件：把几乎所有资源都抽象为文件形式，包括硬件设备，通信接口
+	3）尽量避免捕获用户接口：易于以编程方式实现自动化任务
 	4）配置文件保存为纯文本格式：
 
 GUI接口：图形用户界面（Graphical User Interface）Gnome，KDE，XFace
@@ -73,6 +81,17 @@ CLI接口：（command-line interface，命令行界面）sh bash，csh，zsh，
 	命令提示符，prompt
 	#：root
 	$:普通用户
+	echo $SHELL #查看shell
+	物理终端：/dev/console
+	虚拟终端（terminal）：/dev/ttyN[1-6] 使用 Ctrl+Alt+F1 ～F6 分别打开6个虚拟终端
+	伪终端：/dev/pts/N 
+
+	
+API：application program interface
+ABI：application binary interface
+syscall libcall
+
+
 8.命令格式
 	命令 选项 参数
 		选项[控制命令的执行方式]：
@@ -81,9 +100,10 @@ CLI接口：（command-line interface，命令行界面）sh bash，csh，zsh，
 			长选项: --
 		参数：命令的作用对象  ls -a /etc
 
-虚拟终端（terminal）：Ctrl+Alt+F1-F6
-
 9.切换用户
 	su：switch user
 	su -l 用户名
-	
+10. Localectl set-local LANG=zh_CN.utf8
+
+11. 命令帮助：cmd.oldboyedu.com
+12. 官方文档：https://access.redhat.com/documentation/zh-cn/red_hat_enterprise_linux/9
