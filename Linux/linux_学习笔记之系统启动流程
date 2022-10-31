@@ -2,7 +2,7 @@ Linux系统启动流程
 
 PC：OS(Linux)
 
-POST(加电自检) --> BIOS(Boot Sequence)-->MBR(bootloader,446)-->Kernel-->(ROOTFS)/sbin/init(/etc/inittab)
+POST(Power On Self Test 加电自检) --> BIOS(Basic Input and Output System Boot Sequence)-->MBR(bootloader,446)-->Kernel-->(ROOTFS)/sbin/init(/etc/inittab)
 
 内核设计风格
 
@@ -12,8 +12,8 @@ RedHat，SUSE
 	[root@DQAS kernel]# pwd
 	/lib/modules/2.6.32-431.el6.x86_64/kernel
 	[root@DQAS kernel]# ls
-	arch                crypto        drivers  fs      kernel           lib  mm      net  sound  
-    跟平台相关，驱动CPU  加密解密相关的  驱动    文件系统  内核自身加载模块  库   内存管理 网络  声卡
+	arch                crypto        drivers  fs         kernel           lib    mm        net  sound  
+    跟平台相关，驱动CPU  加密解密相关的        驱动    文件系统  内核自身加载模块    库   内存管理    网络  声卡
 
 
 内核自身：/boot/vmlinuz-2.6.32-431.el6.x86_64
@@ -53,6 +53,9 @@ chrood 改变跟目录，锁定特定目录
 bootloader(MBR)
 	LILO：LInux LOader
 	GRUB：GRand Unified Bootloader
+            [root@hecs-221793 ~]# rpm -qi grub2 | grep GRUB
+            The GRand Unified Bootloader (GRUB) is a highly configurable and
+
 		Stage1：MBR
 		Stage1.5
 		Stage2：/boot/grub/stage2/
@@ -63,8 +66,8 @@ bootloader(MBR)
 	device (hd0) HD(1,800,64000,ce003859-f7bd-46fb-8cb9-3eaffd322b21)
 	default=0  												#设定默认启动的title变化，从0开始
 	timeout=5  												#等待用户选择超时时长，单位是秒
-	splashimage=(hd0,1)/grub/splash.xpm.gz grub             #背景图片
-	hiddenmenu  											#隐藏菜单
+	splashimage=(hd0,1)/grub/splash.xpm.gz grub                                                             #背景图片
+	hiddenmenu  											        #隐藏菜单
 	password  --md5 $1$BgEGg0$SjyYw7yCJHHa3PPU8REpI.        #
 	title Red Hat Enterprise Linux Server (2.6.32-754.23.1.el6.x86_64) #内核标题，或操作系统名称，字符串，可以自由修改
 	        root (hd0,1)  									#内核文件所在的设备，对grub而言，所有类型硬盘一律hd，hd0 表示第几个磁盘，最后的0表示对应的磁盘分区
@@ -139,13 +142,9 @@ Kernel 初始化的过程
 		reload|configtest
 
 chkconfig --list 查看所有独立守护服务的启动设定
-
 chkconfig --list mysql
-
 chkconfig --add service  添加到守护服务
-
 chkconfig --del service  删除守护服务器
-
 chkconfig --leval 24 service off 指定24级别下关闭service服务
 
 /etc/rc.d/rc.local  系统最好启动的一个服务
